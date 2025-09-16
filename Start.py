@@ -1,10 +1,8 @@
 import os
-from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 from keep_alive import keep_alive
 
-load_dotenv()
 token = os.getenv("DISCORD_TOKEN")
 
 class Le_bot(commands.Bot):
@@ -23,5 +21,6 @@ async def on_ready():
     print(f"Connecté en tant que {bot.user}")
     synced = await bot.tree.sync()
     print(f'{len(synced)} commande(s) syncronisée(s)')
+
 
 bot.run(token= token)
