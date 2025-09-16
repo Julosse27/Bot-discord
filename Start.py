@@ -10,6 +10,7 @@ class Le_bot(commands.Bot):
         self.remove_command("Exos_select")
         for extension in ["Modération", "Tests", "Tutos_cog"]:
             await self.load_extension(f"Cogs.{extension}")
+            print(self.cogs.get(extension).get_commands())
 
     async def on_ready(self):
         print(f"Connecté en tant que {bot.user}")
@@ -23,4 +24,5 @@ bot = Le_bot(command_prefix= "$", description= "Le bot qui sers à tout et à ri
 keep_alive()
 
 bot.run(token= token)
+
 
