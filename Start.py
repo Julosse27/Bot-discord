@@ -7,6 +7,7 @@ token = os.getenv("DISCORD_TOKEN")
 
 class Le_bot(commands.Bot):
     async def setup_hook(self):
+        self.recursively_remove_all_commands()
         liste_cogs = ["AdminCog", "TestsCog", "TutosCog"]
         liste_fichiers = ["Modération", "Tests", "Tutos_cog"]
         for extension in liste_fichiers:
@@ -24,6 +25,7 @@ bot = Le_bot(command_prefix= "$", description= "Le bot qui sers à tout et à ri
 keep_alive()
 
 bot.run(token= token)
+
 
 
 
