@@ -7,7 +7,7 @@ token = os.getenv("DISCORD_TOKEN")
 
 class Le_bot(commands.Bot):
     async def setup_hook(self) -> None:
-        for extension in ["Modération", "Tests"]:
+        for extension in ["Modération", "Tests", "Tutos_cog"]:
             await self.load_extension(f"Cogs.{extension}")
 
 intents = discord.Intents.all()
@@ -24,3 +24,4 @@ async def on_ready():
 
 
 bot.run(token= token)
+
