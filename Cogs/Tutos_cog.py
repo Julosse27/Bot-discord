@@ -19,8 +19,8 @@ class Menu(discord.ui.Select):
 
     async def callback(self, interaction: discord.Interaction):
         if self.values[0] == "Exo 1":
-            await interaction.delete_original_response()
-            await interaction.followup.send(view= Tuto_1())
+            self.disabled = True
+            await interaction.response.send_message(view= Tuto_1())
 
 class Menu_view(discord.ui.View):
     def __init__(self):
@@ -38,5 +38,6 @@ class TutosCog(commands.Cog):
 async def setup(bot: commands.Bot):
 
     await bot.add_cog(TutosCog(bot))
+
 
 
