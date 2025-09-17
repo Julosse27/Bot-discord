@@ -6,7 +6,7 @@ class AdminCog(commands.Cog):
         self.bot = bot
 
     @commands.command(name= "message", aliases= ["mes", "ping"], description= "Envois un message à qui tu veut.", brief= "Envois un mp.")
-    @commands.has_any_role(1417199810099937411, 1382302424366186516, 1382303940921659412, 1382455975549599854)
+    @check_me(1417199810099937411, 1382302424366186516, 1382303940921659412, 1382455975549599854)
     async def message(self, ctx, member: discord.Member, *, contenu: str):
         await member.send(content= contenu)
         await ctx.send(content = 'Message envoyé !')
@@ -18,4 +18,5 @@ class AdminCog(commands.Cog):
         await ctx.send(f"{member.name} a bien été exclu(e).")
 
 async def setup(bot: commands.Bot):
+
     await bot.add_cog(AdminCog(bot))
