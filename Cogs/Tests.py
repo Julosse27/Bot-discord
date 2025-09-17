@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 
 class View(discord.ui.View):
+    def __init__(self, *, timeout: float | None = None):
+        super().__init__(timeout=timeout)
 
     @discord.ui.button(label= "Testez moi!", style= discord.ButtonStyle.red)
     async def button_callback(self, interaction: discord.Interaction, bouton):
@@ -49,4 +51,5 @@ class TestsCog(commands.Cog):
         await ctx.send(content = 'Message envoyé.')
 
 async def setup(bot: commands.Bot):
+
     await bot.add_cog(TestsCog(bot))
