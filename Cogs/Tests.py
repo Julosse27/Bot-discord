@@ -51,5 +51,4 @@ class TestsCog(commands.Cog):
         await ctx.send(content = 'Message envoyé.')
 
 async def setup(bot: commands.Bot):
-
     await bot.add_cog(TestsCog(bot))
