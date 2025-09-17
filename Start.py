@@ -26,12 +26,4 @@ bot = Le_bot(command_prefix= "$", description= "Le bot qui sers à tout et à ri
 
 keep_alive()
 
-bot.run(token= token)
-
-
-
-
-
-
-
-
+# bot.run(token= token)
