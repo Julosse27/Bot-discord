@@ -1,6 +1,6 @@
 from discord.ext import commands
 
-async def check_me(*ids):
+def check_me(*ids):
         
         async def predicate(ctx: commands.Context):
             for id in ids:
@@ -11,5 +11,6 @@ async def check_me(*ids):
                 return False
 
         return commands.check(predicate)
+
 
 
