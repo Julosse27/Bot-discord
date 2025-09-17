@@ -7,12 +7,12 @@ token = os.getenv("DISCORD_TOKEN")
 
 class Le_bot(commands.Bot):
     async def setup_hook(self):
-        self.remove_command("Exos_select")
-        self.remove_command("Exo")
-        self.remove_command("Exos")
         liste_cogs = ["AdminCog", "TestsCog", "TutosCog"]
         liste_fichiers = ["Modération", "Tests", "Tutos_cog"]
         for extension in liste_fichiers:
+            if self.get_cog(extension) != None:
+                await self.unload_extension(liste_cogs[liste_fichiers.index(extension)])
+                print(f"L'ancienne extension {liste_cogs[liste_fichiers.index(extension)]} à bien été remplacée.")
             await self.load_extension(f"Cogs.{extension}")
 
     async def on_ready(self):
@@ -27,4 +27,5 @@ bot = Le_bot(command_prefix= "$", description= "Le bot qui sers à tout et à ri
 # keep_alive()
 
 # bot.run(token= token)
+
 
