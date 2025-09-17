@@ -20,6 +20,12 @@ class Le_bot(commands.Bot):
         synced = await bot.tree.sync()
         print(f'{len(synced)} commande(s) syncronisée(s)')
 
+    async def on_command_error(self, context: commands.Context, exception: commands.CommandError) -> None:
+        if exception == "failed":
+            await context.send(content= "Vous n'avez pas les permisions requises !!!")
+        else:
+            return await super().on_command_error(context, exception)
+
 intents = discord.Intents.all()
 
 bot = Le_bot(command_prefix= "$", description= "Le bot qui sers à tout et à rien !!!", intents=intents, owner_id= 948981926264467466)
@@ -27,6 +33,7 @@ bot = Le_bot(command_prefix= "$", description= "Le bot qui sers à tout et à ri
 keep_alive()
 
 bot.run(token= token)
+
 
 
 
