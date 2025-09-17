@@ -24,8 +24,9 @@ intents = discord.Intents.all()
 
 bot = Le_bot(command_prefix= "$", description= "Le bot qui sers à tout et à rien !!!", intents=intents, owner_id= 948981926264467466)
 
-# keep_alive()
+keep_alive()
 
-# bot.run(token= token)
+bot.run(token= token)
+
 
 
