@@ -7,7 +7,8 @@ def check_me(*ids):
                 if role.id in ids:
                     return True
             else:
-                ctx.send(context = "Vous n'avez pas les permisions requises")
+                ctx.send(content = "Vous n'avez pas les permisions requises")
                 return False
         
+
         return commands.check(predicate)
