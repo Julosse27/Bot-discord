@@ -10,7 +10,7 @@ class Le_bot(commands.Bot):
         liste_cogs = ["AdminCog", "TestsCog", "TutosCog"]
         liste_fichiers = ["Modération", "Tests", "Tutos_cog"]
         for extension in liste_fichiers:
-            if self.get_cog(extension) != None:
+            if self.get_cog(liste_cogs[liste_fichiers.index(extension)]) != None:
                 await self.unload_extension(liste_cogs[liste_fichiers.index(extension)])
                 print(f"L'ancienne extension {liste_cogs[liste_fichiers.index(extension)]} à bien été remplacée.")
             await self.load_extension(f"Cogs.{extension}")
@@ -27,6 +27,7 @@ bot = Le_bot(command_prefix= "$", description= "Le bot qui sers à tout et à ri
 keep_alive()
 
 bot.run(token= token)
+
 
 
 
