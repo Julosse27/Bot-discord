@@ -45,9 +45,10 @@ class TutosCog(commands.Cog):
     @commands.command(name = "exos_select", aliases = ["exos", "exo"], description = "Une commande qui permet de s'exercer aux diferents tutos.", brief = "Fait spawn un exo.")
     @check_me(1417199810099937411)
     async def monTuto(self, ctx):
-        await ctx.send(view= Menu_view())
+        await ctx.send(view= Menu_view(), ephemeral = True)
 
 
 async def setup(bot: commands.Bot):    
 
     await bot.add_cog(TutosCog(bot))
+
