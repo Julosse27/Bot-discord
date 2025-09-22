@@ -1,6 +1,8 @@
 from discord.ext import commands
 import requests
 
+url_test = "https://bot-discord-13wx.onrender.com/test.txt"
+
 def check_me(*ids):
         
         async def predicate(ctx: commands.Context):
@@ -16,4 +18,5 @@ def check_me(*ids):
 def get_test():
      result = requests.get(url_test)
      return result.content
+
 
