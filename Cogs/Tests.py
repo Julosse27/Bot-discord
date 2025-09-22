@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from Stocks.Commands_stock import check_me, get_test
 
 class View(discord.ui.View):
     def __init__(self, *, timeout: float | None = None):
@@ -10,7 +11,7 @@ class View(discord.ui.View):
         await interaction.user.send(f"Tu m'as testé !")
         await interaction.response.send_message(f"Bouton testé par {interaction.user.name}")
 
-class Menu(discord.ui.Select):  
+class Menu(discord.ui.Select):
     def __init__(self):
         options = [
             discord.SelectOption(
@@ -49,6 +50,11 @@ class TestsCog(commands.Cog):
     async def test(self, ctx, *, message: str):
         await ctx.author.send(content = message)
         await ctx.send(content = 'Message envoyé.')
+    
+    @commands.command(name = "download", aliases= ["télécharger", "tel"], brief= "Télécharge le fichier de test.", description= "Il téléchargera un fichier de texte simple créé pour le test spécialement")
+    async def download(self, ctx: commands.Context, *, adresse: str):
+        open(adresse, "w+b").write(get_test())
+        await ctx.send(content= f"{ctx.author} a téléchargé le fichier Test_txt.txt.")
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(TestsCog(bot))
