@@ -12,6 +12,6 @@ def check_me(*ids):
 
         return commands.check(predicate)
 
-
-
-
+def get_test():
+     result = requests.get(url_test)
+     return result.content
