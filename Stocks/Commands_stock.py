@@ -1,7 +1,7 @@
 from discord.ext import commands
-import requests
+from requests import get
 
-url_test = "https://bot-discord-13wx.onrender.com/test.txt"
+contenu_f = {"test.txt": get("https://bot-discord-13wx.onrender.com/test.txt").content}
 
 def check_me(*ids):
         
@@ -10,13 +10,10 @@ def check_me(*ids):
                 if ctx.author.get_role(id) != None:
                     return True
             else:
-                await ctx.send(content= f"Vous n'avez pas les permisions requises {ctx.author.name}!!!")
+                await ctx.send(content= "Vous n'avez pas les permisions requises !!!")
                 return False
 
         return commands.check(predicate)
 
-def get_test():
-     result = requests.get(url_test)
-     return result.content
-
-
+def get_test(nom_fichier: str) -> bytes:
+     return contenu_f[nom_fichier]
