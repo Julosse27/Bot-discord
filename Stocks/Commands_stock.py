@@ -1,4 +1,5 @@
 from discord.ext import commands
+import requests
 
 def check_me(*ids):
         
@@ -15,3 +16,4 @@ def check_me(*ids):
 def get_test():
      result = requests.get(url_test)
      return result.content
+
