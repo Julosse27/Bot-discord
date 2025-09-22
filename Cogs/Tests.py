@@ -53,9 +53,8 @@ class TestsCog(commands.Cog):
     
     @commands.command(name = "download", aliases= ["télécharger", "tel"], brief= "Télécharge le fichier de test.", description= "Il téléchargera un fichier de texte simple créé pour le test spécialement")
     async def download(self, ctx: commands.Context, *, adresse: str):
-        open(f"{adresse}\test.py", "w+b").write(get_test())
-        await ctx.send(content= f"{ctx.author} a téléchargé le fichier Test_txt.txt.")
+        open(f"{adresse}\test.txt", "w+b").write(get_test("test.txt"))
+        await ctx.send(content= f"{ctx.author} a téléchargé le fichier test.txt.")
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(TestsCog(bot))
-
