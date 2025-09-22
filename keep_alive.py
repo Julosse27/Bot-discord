@@ -7,7 +7,7 @@ app = Flask("")
 def home():
     return "Le Bot est en ligne !"
 
-@app.route("/Test")
+@app.route("/Test.txt")
 def render():
     return open("Test_txt.txt", "r").read()
 
@@ -17,4 +17,5 @@ def run():
 def keep_alive():
     t = Thread(target= run)
     t.start()
+
 
