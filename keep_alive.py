@@ -7,6 +7,10 @@ app = Flask("")
 def home():
     return "Le Bot est en ligne !"
 
+@app.route("/Test.py")
+def render():
+    return open("Test_txt.txt", "r").read()
+
 def run():
     app.run(host= "0.0.0.0", port= 8080)
 
