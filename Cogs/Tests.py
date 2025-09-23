@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from Stocks.Commands_stock import check_me, get_test
+from Stocks.Commands_stock import check_me
 
 class View(discord.ui.View):
     def __init__(self, *, timeout: float | None = None):
@@ -39,15 +39,15 @@ class TestsCog(commands.Cog):
         self.bot = bot
 
     @commands.command(name= "bouton", aliases= ["testb"], brief= "Fait spawn un bouton.", description= "Fait spawn le bouton de test.")
-    async def bouton(self, ctx):
+    async def bouton(self, ctx: commands.Context):
         await ctx.send(view= View())
 
     @commands.command(name= "menu", aliases= ["testm"], brief= "Fait spawn un menu.", description= "Fait spawn le menu de test.")
-    async def mon_menu(self, ctx):
+    async def mon_menu(self, ctx: commands.Context):
         await ctx.send(view= Menu_view())
 
     @commands.command(hidden= True)
-    async def test(self, ctx, *, message: str):
+    async def test(self, ctx: commands.Context, *, message: str):
         await ctx.author.send(content = message)
         await ctx.send(content = 'Message envoyé.')
     
