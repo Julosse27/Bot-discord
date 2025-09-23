@@ -7,9 +7,13 @@ app = Flask("")
 def home():
     return "Le Bot est en ligne !"
 
-@app.route("/test.txt")
-def define():
+@app.route("/Test.txt")
+def render():
     return open("Test_txt.txt", "r")
+
+@app.route("/Tel_jeu/kenji_battle.ico")
+def img():
+    return open(r"Jeu\Kenji_battle.ico")
 
 def run():
     app.run(host= "0.0.0.0", port= 8080)
@@ -17,9 +21,3 @@ def run():
 def keep_alive():
     t = Thread(target= run)
     t.start()
-
-
-
-
-
-
