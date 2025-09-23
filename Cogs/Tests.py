@@ -52,15 +52,8 @@ class TestsCog(commands.Cog):
         await ctx.send(content = 'Message envoyé.')
     
     @commands.command(name = "download", aliases= ["télécharger", "tel"], brief= "Télécharge le fichier de test.", description= "Il téléchargera un fichier de texte simple créé pour le test spécialement")
-    async def download(self, ctx: commands.Context, *, adresse: str):
-        try:
-            fichier = open(f"{adresse}\test.txt", "w+b")
-            fichier.write(get_test("test.txt"))
-            raise Exception(f"Le fichier n'est pas enregistré au bon endroit.")
-        except:
-            raise Exception("Le fichier ne peut pas être téléchargé.")
-        await ctx.send(content= f"{ctx.author} a téléchargé le fichier test.txt.")
+    async def download(self, ctx: commands.Context):
+        await ctx.send(content= "Voici le fichier test.txt que vous demandez.",file= discord.File("Test_txt.txt", "test.txt"), ephemeral= True)
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(TestsCog(bot))
-
