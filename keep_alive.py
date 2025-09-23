@@ -13,7 +13,7 @@ def render():
 
 @app.route("/Tel_jeu/kenji_battle.ico")
 def img():
-    return open(r"Jeu\Kenji_Battle.ico")
+    return open("Jeu/Kenji_battle.ico")
 
 def run():
     app.run(host= "0.0.0.0", port= 8080)
@@ -21,4 +21,5 @@ def run():
 def keep_alive():
     t = Thread(target= run)
     t.start()
+
 
