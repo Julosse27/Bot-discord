@@ -52,8 +52,11 @@ class TestsCog(commands.Cog):
         await ctx.send(content = 'Message envoyé.')
     
     @commands.command(name = "download", aliases= ["télécharger", "tel"], brief= "Télécharge le fichier de test.", description= "Il téléchargera un fichier de texte simple créé pour le test spécialement")
-    async def download(self, ctx: commands.Context):
-        await ctx.send(content= "Voici le fichier test.txt que vous demandez.",file= discord.File("Test_txt.txt", "test.txt"), ephemeral= True)
+    async def download(self, ctx: commands.Context, fichier: str):
+        if fichier == "text.txt":
+            await ctx.send(content= "Voici le fichier test.txt que vous demandez.",file= discord.File("Test_txt.txt", "test.txt"))
+        elif fichier == "kenji_battle.ico":
+            await ctx.send(content= "Voici le fichier kenji_battle.ico que vous demandez.",file= discord.File(r"Jeu\Kenji_Battle.ico", "kenji_battle.ico"))
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(TestsCog(bot))
