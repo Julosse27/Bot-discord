@@ -56,7 +56,8 @@ class TestsCog(commands.Cog):
         if fichier == "text.txt":
             await ctx.send(content= "Voici le fichier test.txt que vous demandez.",file= discord.File("Test_txt.txt", "test.txt"))
         elif fichier == "kenji_battle.ico":
-            await ctx.send(content= "Voici le fichier kenji_battle.ico que vous demandez.",file= discord.File(r"Jeu\Kenji_Battle.ico", "kenji_battle.ico"))
+            await ctx.send(content= "Voici le fichier kenji_battle.ico que vous demandez.",file= discord.File("Jeu\Kenji_Battle.ico", "kenji_battle.ico"))
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(TestsCog(bot))
+
