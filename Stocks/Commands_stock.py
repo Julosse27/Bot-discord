@@ -5,7 +5,7 @@ contenu_f = {"test.txt": get("https://bot-discord-13wx.onrender.com/test.txt").c
 
 def check_me(*ids):
         
-        async def predicate(ctx: commands.Context):
+        async def predicate(ctx):
             for id in ids:
                 if ctx.author.get_role(id) != None:
                     return True
@@ -14,6 +14,3 @@ def check_me(*ids):
                 return False
 
         return commands.check(predicate)
-
-def get_test(nom_fichier: str) -> bytes:
-     return contenu_f[nom_fichier]
