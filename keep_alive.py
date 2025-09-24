@@ -1,6 +1,6 @@
 from flask import Flask
 from threading import Thread
-from jeu.Recup_fichiers import recup_fichier
+from Jeu.Recup_fichiers import recup_fichier
 
 app = Flask("")
 
@@ -22,4 +22,5 @@ def run():
 def keep_alive():
     t = Thread(target= run)
     t.start()
+
 
