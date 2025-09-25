@@ -1,0 +1,2 @@
+Le fichier que vous demandez n'existe pas dans la mémoire du bot.               
+Ce fichier est un fichier type.
