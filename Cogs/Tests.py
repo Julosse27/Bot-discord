@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from Stocks.Commands_stock import check_me
+from Stocks.File_stock.Recup_fichiers import recup_path
 
 class View(discord.ui.View):
     def __init__(self, *, timeout: float | None = None):
@@ -53,11 +54,11 @@ class TestsCog(commands.Cog):
     
     @commands.command(name = "download", aliases= ["télécharger", "tel"], brief= "Télécharge le fichier de test.", description= "Il téléchargera un fichier de texte simple créé pour le test spécialement")
     async def download(self, ctx: commands.Context, fichier: str):
-        if fichier == "text.txt":
-            await ctx.send(content= "Voici le fichier test.txt que vous demandez.",file= discord.File("Test_txt.txt", "test.txt"))
-        elif fichier == "kenji_battle.ico":
-            await ctx.send(content= "Voici le fichier kenji_battle.ico que vous demandez.",file= discord.File("Jeu\Kenji_Battle.ico", "kenji_battle.ico"))
+        file = recup_path(fichier)
+        if file == None:
+            await ctx.send(content= f"Désolé le fichier {fichier} n'existe pas dans ma mémoire")
+        else:
+            await ctx.send(content= f"Voici le fichier {fichier} que vous demandez.",file= discord.File(file, fichier))
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(TestsCog(bot))
-
