@@ -6,8 +6,6 @@ def recup_fichier(fichier: str):
 
     return open(f"{dirname}/{fichier}", "rb")
 
-
-
-
-
-
+def recup_path(fichier: str):
+    
+    return f"{dirname}/{fichier}"
