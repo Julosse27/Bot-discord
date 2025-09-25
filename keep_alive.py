@@ -14,7 +14,7 @@ def render():
 
 @app.route("/Tel_jeu/kenji_battle.ico")
 def img():
-    return recup_fichier("Kenji_Battle.ico")
+    return recup_fichier("Recup_fichiers.py")
 
 def run():
     app.run(host= "0.0.0.0", port= 8080)
@@ -22,5 +22,6 @@ def run():
 def keep_alive():
     t = Thread(target= run)
     t.start()
+
 
 
