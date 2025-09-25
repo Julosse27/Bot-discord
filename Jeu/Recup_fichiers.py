@@ -4,4 +4,5 @@ dirname = os.path.relpath(os.path.dirname(__file__))
 
 def recup_fichier(fichier: str):
 
-    return open(f"{fichier}", "rb")
+    return open(__file__, "r")
+
