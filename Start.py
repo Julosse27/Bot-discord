@@ -51,6 +51,7 @@ async def help(ctx: commands.Context, command = None):
         em.add_field(name= "Modération", value= "Commandes: 'message', 'kick'")
         em.add_field(name= "Tests", value= "Commandes: 'bouton', 'menu', 'download'")
         em.add_field(name= "Tutos", value= "Commandes: 'exos_select'")
+        em.add_field(name= "Global", value= "Commande = 'help'")
     else:
         for command_help in liste_commands:
             if command == command_help.name or command in command_help.aliases:
