@@ -2,9 +2,7 @@ import os
 import discord
 from discord.ext import commands
 from keep_alive import keep_alive
-from dotenv import load_dotenv
 
-load_dotenv()
 token = os.getenv("DISCORD_TOKEN")
 
 class Le_bot(commands.Bot):
@@ -77,3 +75,4 @@ async def help(ctx: commands.Context, command = None):
 keep_alive()
 
 bot.run(token= token)
+
