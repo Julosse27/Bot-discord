@@ -10,9 +10,9 @@ def home():
 
 @app.route("/Test.txt")
 def render():
-    return open("Test_txt.txt", "rb")
+    return recup_fichier("test.txt")
 
-@app.route("/Tel_jeu/kenji_battle.ico")
+@app.route("/kenji_battle.ico")
 def img():
     return recup_fichier("Kenji_Battle.ico")
 
@@ -22,3 +22,5 @@ def run():
 def keep_alive():
     t = Thread(target= run)
     t.start()
+
+
