@@ -18,8 +18,6 @@ class Le_bot(commands.Bot):
 
         for extension in liste_cogs:
 
-            self.remove_command("help")
-
             if self.get_cog(extension) != None:
                 for command in self.get_cog(extension).get_commands():
                     self.remove_command(command.name)
@@ -42,6 +40,8 @@ class Le_bot(commands.Bot):
 intents = discord.Intents.all()
 
 bot = Le_bot(command_prefix= "$", description= "Le bot qui sers à tout et à rien !!!", intents=intents, owner_id= 948981926264467466)
+
+bot.remove_command("help")
 
 @bot.command(name= "help", brief= "Juste de l'aide", description= "Donne de l'aide sur une commande ou sur un groupe de commandes(cog).")
 async def help(ctx: commands.Context, command = None):
