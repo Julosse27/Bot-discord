@@ -7,7 +7,7 @@ file_not_exist = f"{dirname}/file_not_exist.txt"
 def recup_fichier(fichier: str):
 
     if not os.path.exists(f"{dirname}/{fichier}"):
-        return open(file_not_exist, "r")
+        return open(file_not_exist, "rb")
     
     file = open(f"{dirname}/{fichier}", "rb")
     
