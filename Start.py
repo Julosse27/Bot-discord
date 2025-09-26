@@ -21,6 +21,8 @@ class Le_bot(commands.Bot):
             self.remove_command("help")
 
             if self.get_cog(extension) != None:
+                for command in self.get_cog(extension).get_commands():
+                    self.remove_command(command.name)
 
                 await self.unload_extension(extension)
                 print(f"L'ancienne extension {extension} à bien été remplacée.")
@@ -75,4 +77,3 @@ async def help(ctx: commands.Context, command = None):
 keep_alive()
 
 bot.run(token= token)
-
