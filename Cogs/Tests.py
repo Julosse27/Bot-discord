@@ -35,9 +35,10 @@ class Menu_view(discord.ui.View):
         super().__init__()
         self.add_item(Menu())
 
-class TestsCog(commands.Cog):
+class Tests(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.description = "Le cog basic ou tout est testé, j'ai commencé à coder ce avec ces commandes."
 
     @commands.command(name= "bouton", aliases= ["testb"], brief= "Fait spawn un bouton.", description= "Fait spawn le bouton de test.")
     async def bouton(self, ctx: commands.Context):
@@ -61,4 +62,4 @@ class TestsCog(commands.Cog):
             await ctx.send(content= f"Voici le fichier {fichier} que vous demandez.",file= discord.File(file, fichier))
 
 async def setup(bot: commands.Bot):
-    await bot.add_cog(TestsCog(bot))
+    await bot.add_cog(Tests(bot))
