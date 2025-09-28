@@ -1,1 +1,2 @@
-V0.5\\V0.5.py, V0.5.py; V0.5\\Kenji_Battle_Ressources.pyxres, Kenji_Battle_Ressources.pyxres
+V0.5\\V0.5.py, V0.5.py;
+V0.5\\Kenji_Battle_Ressources.pyxres, Kenji_Battle_Ressources.pyxres
