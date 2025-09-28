@@ -18,6 +18,6 @@ def recup_path(fichier: str):
     path = f"{dirname}/{fichier}"
 
     if not os.path.exists(path):
-        return None
+        return file_not_exist
     
     return path
