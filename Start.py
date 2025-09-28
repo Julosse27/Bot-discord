@@ -18,8 +18,6 @@ class Le_bot(commands.Bot):
 
         for extension in liste_cogs:
 
-            self.remove_command("help")
-
             if self.get_cog(extension) != None:
                 for command in self.get_cog(extension).get_commands():
                     self.remove_command(command.name)
@@ -43,14 +41,17 @@ intents = discord.Intents.all()
 
 bot = Le_bot(command_prefix= "$", description= "Le bot qui sers à tout et à rien !!!", intents=intents, owner_id= 948981926264467466)
 
+bot.remove_command("help")
+
 @bot.command(name= "help", brief= "Juste de l'aide", description= "Donne de l'aide sur une commande ou sur un groupe de commandes(cog).")
 async def help(ctx: commands.Context, command = None):
     if command == None:
-        em = discord.Embed(title= "Help", description= "Utilisez cette même commande avec le nom de la commande que vous voulez comprendre pour avoir de l'aide.", color= ctx.author.color)
+        em = discord.Embed(title= "Help", description= "Utilisez cette même commande avec le nom de la commande ou du groupe de commandes(cog) que vous voulez comprendre pour avoir de l'aide.", color= ctx.author.color)
 
         em.add_field(name= "Modération", value= "Commandes: 'message', 'kick'")
         em.add_field(name= "Tests", value= "Commandes: 'bouton', 'menu', 'download'")
         em.add_field(name= "Tutos", value= "Commandes: 'exos_select'")
+        em.add_field(name= "Global", value= "Commande = 'help'")
     else:
         for command_help in liste_commands:
             if command == command_help.name or command in command_help.aliases:
@@ -59,6 +60,12 @@ async def help(ctx: commands.Context, command = None):
                     break
                 else:
                     em = discord.Embed(title= command_help.name, description= command_help.description, color= ctx.author.color)
+
+                    aliases = command_help.aliases
+
+                    if len(aliases) != 0:
+                        em.add_field(name= "Aliases", value= f"{", ".join(aliases)}.")
+
                     break
         else:
             for cog in liste_help_cog:
@@ -66,8 +73,8 @@ async def help(ctx: commands.Context, command = None):
                     em = discord.Embed(title= cog.__cog_name__, description= cog.description, color= ctx.author.color)
 
                     for commands in cog.get_commands():
-                        em.add_field(name= commands.name, value= commands.brief)
-                    
+                        if not commands.hidden:
+                            em.add_field(name= commands.name, value= commands.brief)
                     break
             else:
                 em = discord.Embed(title= "Cette commande/cog n'est pas disponible.")
