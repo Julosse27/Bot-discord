@@ -1,1 +1,3 @@
-Kenji_Battle\\V2\\V2.py, V2.py; Kenji_Battle\\V2\\Ressources\\Données.sq3, Données.sq3; Kenji_Battle\\V2\\Ressources\\Kenji_Battle_Ressources.pyxres, Kenji_Battle_Ressources.pyxres
+Kenji_Battle\\V2\\V2.py, V2.py;
+Kenji_Battle\\V2\\Ressources\\Données.sq3, Données.sq3;
+Kenji_Battle\\V2\\Ressources\\Kenji_Battle_Ressources.pyxres, Kenji_Battle_Ressources.pyxres
