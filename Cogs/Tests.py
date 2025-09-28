@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from Stocks.Commands_stock import check_me
-from Stocks.File_stock.Recup_fichiers import recup_path
+from Stocks.File_stock.Recup_fichiers import recup_path, file_not_exist
 
 class View(discord.ui.View):
     def __init__(self, *, timeout: float | None = None):
@@ -56,7 +56,7 @@ class Tests(commands.Cog):
     @commands.command(name = "download", aliases= ["télécharger", "tel"], brief= "Télécharge le fichier de test.", description= "Il téléchargera un fichier de texte simple créé pour le test spécialement")
     async def download(self, ctx: commands.Context, fichier: str):
         file = recup_path(fichier)
-        if file == None:
+        if file == file_not_exist:
             await ctx.send(content= f"Désolé le fichier {fichier} n'existe pas dans ma mémoire")
         else:
             await ctx.send(content= f"Voici le fichier {fichier} que vous demandez.",file= discord.File(file, fichier))
