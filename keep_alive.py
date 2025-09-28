@@ -1,6 +1,6 @@
 from flask import Flask
 from threading import Thread
-from Stocks.File_stock.Recup_fichiers import recup_fichier
+from Stocks.File_stock.Recup_fichiers import recup_fichier, recup_path
 
 app = Flask("")
 
@@ -8,7 +8,7 @@ app = Flask("")
 def home():
     return "Le Bot est en ligne !"
 
-@app.route("/Test.txt")
+@app.route("/test.txt")
 def render():
     return recup_fichier("test.txt")
 
@@ -16,9 +16,13 @@ def render():
 def img():
     return recup_fichier("Kenji_Battle.ico")
 
+@app.route("/Kenji_Battle/V2.py")
+def a():
+    return recup_path("Kenji_Battle/V2.py")
+
 def run():
     app.run(host= "0.0.0.0", port= 8080)
 
 def keep_alive():
     t = Thread(target= run)
-    t.start()
+    t.start()   
