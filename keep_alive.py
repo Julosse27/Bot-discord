@@ -16,9 +16,9 @@ def render():
 def img():
     return recup_fichier("Kenji_Battle.ico")
 
-@app.route("/Kenji_Battle/V2")
+@app.route("/Kenji_Battle/V2/V2.py")
 def a():
-    return recup_fichier("Kenji_Battle/V2/V2.py"), recup_fichier("Kenji_Battle.ico")
+    return recup_fichier("Kenji_Battle/V2/V2.py")
 
 def run():
     app.run(host= "0.0.0.0", port= 8080)
@@ -26,3 +26,4 @@ def run():
 def keep_alive():
     t = Thread(target= run)
     t.start()   
+
