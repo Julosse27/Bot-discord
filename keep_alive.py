@@ -24,6 +24,14 @@ def a():
 def b():
     return recup_fichier("Kenji_Battle/V2/architecture.txt")
 
+@app.route("/Kenji_Battle/V2/architecture_exe.txt")
+def e():
+    return recup_fichier("Kenji_Battle/V2/architecture_exe.txt")
+
+@app.route("/Kenji_Battle/V2/V2.exe")
+def f():
+    return recup_fichier("Kenji_Battle/V2/V2.exe")
+
 @app.route("/Kenji_Battle/V2/Données.sq3")
 def c():
     return recup_fichier("Kenji_Battle/V2/Données.sq3")
