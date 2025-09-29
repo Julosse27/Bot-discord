@@ -1,0 +1,2 @@
+Kenji_Battle\V2\V2.exe, V2.exe
+Kenji_Battle\V2\Ressources\Données.sq3, Données.sq3
