@@ -20,7 +20,8 @@ class Global(commands.Cog):
 
                 list_name_command = []
                 for command in self.bot.cogs.get(name, commands.Cog).__cog_commands__:
-                    list_name_command.append(f"'command.name'")
+                    if not command.hidden:
+                        list_name_command.append(f"'{command.name}'")
 
                 em.add_field(name= name, value= f"Commandes: {", ".join(list_name_command)}.")
         
@@ -98,3 +99,4 @@ bot = Le_bot(command_prefix= "$", description= "Le bot qui sers à tout et à ri
 keep_alive()
 
 bot.run(token= token)
+
