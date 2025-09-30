@@ -12,7 +12,7 @@ class Global(commands.Cog):
 
     @commands.command(name= "help", brief= "Un peu d'aide.", description= "Donne de l'aide sur une commande ou un groupe commandes.")
     async def help(self, ctx: commands.Context, command = None):
-        
+
         if command == None:
             em = discord.Embed(title= "Help", description= "Utilisez cette même commande avec le nom de la commande ou du groupe de commandes(cog) que vous voulez comprendre pour avoir de l'aide.", color= ctx.author.color)
 
@@ -66,11 +66,11 @@ class Le_bot(commands.Bot):
 
         self.remove_command("help")
 
-        for extension in liste_cogs:
+        for cog in self.cogs:
+            await self.remove_cog(cog)
+            print(f"L'ancienne extension {self.cogs.get(cog).__cog_name__} à bien été remplacée.")
 
-            for cog in self.cogs:
-                await self.remove_cog(cog)
-                print(f"L'ancienne extension {extension} à bien été remplacée.")
+        for extension in liste_cogs:
             
             await self.load_extension(f"Cogs.{extension}")
 
