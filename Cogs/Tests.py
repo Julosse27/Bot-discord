@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from Stocks.Commands_stock import check_me
 from Stocks.File_stock.Recup_fichiers import recup_path, file_not_exist
+from discord import app_commands
 
 class View(discord.ui.View):
     def __init__(self, *, timeout: float | None = None):
@@ -36,10 +37,16 @@ class Menu_view(discord.ui.View):
         self.add_item(Menu())
 
 class Tests(commands.Cog):
-    def __init__(self, bot):
+    def slashs_commands(self):
+        @self.bot.tree.command(name= "test_slash", description= "Envois un message 'test'")
+        async def test_slash(interaction: discord.Interaction):
+            await interaction.response.send_message(content= "test")
+
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.description = "Le cog basic ou tout est testé, j'ai commencé à coder ce avec ces commandes."
-
+        self.slashs_commands()
+        
     @commands.command(name= "bouton", aliases= ["testb"], brief= "Fait spawn un bouton.", description= "Fait spawn le bouton de test.")
     async def bouton(self, ctx: commands.Context):
         await ctx.send(view= View())
