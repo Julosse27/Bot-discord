@@ -2,7 +2,9 @@ import os
 import discord
 from discord.ext import commands
 from keep_alive import keep_alive
+import dotenv
 
+dotenv.load_dotenv(".env")
 token = os.getenv("DISCORD_TOKEN", "")
 
 class Global(commands.Cog):
@@ -20,8 +22,7 @@ class Global(commands.Cog):
 
                 list_name_command = []
                 for command in self.bot.cogs.get(name, commands.Cog).__cog_commands__:
-                    if not command.hidden:
-                        list_name_command.append(f"'{command.name}'")
+                    list_name_command.append(f"'{command.name}'")
 
                 em.add_field(name= name, value= f"Commandes: {", ".join(list_name_command)}.")
         
@@ -64,13 +65,7 @@ class Le_bot(commands.Bot):
 
         liste_commands = []
         liste_help_cog = []
-
-        self.remove_command("help")
-
-        for cog in self.cogs:
-            await self.remove_cog(cog)
-            print(f"L'ancienne extension {self.cogs.get(cog).__cog_name__} à bien été remplacée.")
-
+        
         for extension in liste_cogs:
             
             await self.load_extension(f"Cogs.{extension}")
@@ -99,6 +94,3 @@ bot = Le_bot(command_prefix= "$", description= "Le bot qui sers à tout et à ri
 keep_alive()
 
 bot.run(token= token)
-
-
-
