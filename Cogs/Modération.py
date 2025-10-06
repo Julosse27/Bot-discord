@@ -5,7 +5,7 @@ from Stocks.Commands_stock import check_me
 
 class Modération(commands.Cog):
     def slashs_commands(self):
-        @self.bot.tree.command(name= "re_test", description= "Envois un message 'test'")
+        @self.app_command.command(name= "re_test")
         async def test_slash(interaction: discord.Interaction):
             await interaction.response.send_message(content= "test")
 
@@ -19,6 +19,8 @@ class Modération(commands.Cog):
     async def message(self, ctx, member: discord.Member, *, contenu: str):
         await member.send(content= contenu)
         await ctx.send(content = 'Message envoyé !')
+
+    @
 
     @commands.command(name= "kick", aliases= ["k"], description= "Kick la personne que t'aime pas de ce serveur.", brief= "Kick quelqu'un.")
     @check_me(1382302424366186516)
