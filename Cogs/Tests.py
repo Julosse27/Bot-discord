@@ -43,7 +43,7 @@ class Tests(commands.Cog):
 
     @app_commands.command(name= "test_slash", description= "Envois un message 'test'")
     async def test_slash(self, interaction: discord.Interaction):
-        await interaction.response.send_message(content= "test 231")
+        await interaction.response.send_message(content= "test")
         
     @commands.command(name= "bouton", aliases= ["testb"], brief= "Fait spawn un bouton.", description= "Fait spawn le bouton de test.")
     async def bouton(self, ctx: commands.Context):
@@ -68,4 +68,5 @@ class Tests(commands.Cog):
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Tests(bot))
+
 
