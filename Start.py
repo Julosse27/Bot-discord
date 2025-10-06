@@ -91,6 +91,8 @@ class Le_bot(commands.Bot):
         print(f"Connecté en tant que {bot.user}")
         synced = await bot.tree.sync()
         print(f'{len(synced)} commande(s) syncronisée(s)')
+        if len(synced) == 1:
+            raise Exception("Il manque une commande")
 
 intents = discord.Intents.all()
 
@@ -99,4 +101,5 @@ bot = Le_bot(command_prefix= "$", description= "Le bot qui sers à tout et à ri
 keep_alive()
 
 bot.run(token= token)
+
 
