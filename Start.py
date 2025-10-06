@@ -3,7 +3,56 @@ import discord
 from discord.ext import commands
 from keep_alive import keep_alive
 
-token = os.getenv("DISCORD_TOKEN")
+token = os.getenv("DISCORD_TOKEN", "")
+
+class Global(commands.Cog):
+    def __init__(self, bot: commands.Bot):
+        self.bot = bot
+        self.description = "Groupe de commandes générales presque basiques."
+
+    @commands.command(name= "help", brief= "Un peu d'aide.", description= "Donne de l'aide sur une commande ou un groupe commandes.")
+    async def help(self, ctx: commands.Context, command = None):
+
+        if command == None:
+            em = discord.Embed(title= "Help", description= "Utilisez cette même commande avec le nom de la commande ou du groupe de commandes(cog) que vous voulez comprendre pour avoir de l'aide.", color= ctx.author.color)
+
+            for name in self.bot.cogs:
+
+                list_name_command = []
+                for command in self.bot.cogs.get(name, commands.Cog).__cog_commands__:
+                    if not command.hidden:
+                        list_name_command.append(f"'{command.name}'")
+
+                em.add_field(name= name, value= f"Commandes: {", ".join(list_name_command)}.")
+        
+        else:
+            for command_help in liste_commands:
+                if command == command_help.name or command in command_help.aliases:
+                    if command_help.hidden:
+                        em = discord.Embed(title= "Cette commande/cog n'est pas disponible.")
+                        break
+                    else:
+                        em = discord.Embed(title= command_help.name, description= command_help.description, color= ctx.author.color)
+
+                        aliases = command_help.aliases
+
+                        if len(aliases) != 0:
+                            em.add_field(name= "Aliases", value= f"{", ".join(aliases)}.")
+
+                        break
+            else:
+                for cog in liste_help_cog:
+                    if command == cog.__cog_name__ or command == cog.__cog_name__.lower():
+                        em = discord.Embed(title= cog.__cog_name__, description= cog.description, color= ctx.author.color)
+
+                        for commands_help in cog.get_commands():
+                            if not commands_help.hidden:
+                                em.add_field(name= commands_help.name, value= commands_help.brief)
+                        break
+                else:
+                    em = discord.Embed(title= "Cette commande/cog n'est pas disponible.")
+
+        await ctx.send(embed= em)
 
 class Le_bot(commands.Bot):
 
@@ -16,71 +65,36 @@ class Le_bot(commands.Bot):
         liste_commands = []
         liste_help_cog = []
 
+        self.remove_command("help")
+
         for extension in liste_cogs:
-
-            if self.get_cog(extension) != None:
-                for command in self.get_cog(extension).get_commands():
-                    self.remove_command(command.name)
-
-                await self.unload_extension(extension)
-                print(f"L'ancienne extension {extension} à bien été remplacée.")
             
             await self.load_extension(f"Cogs.{extension}")
 
-            for command in self.get_cog(extension).get_commands():
+            for command in self.cogs.get(extension, commands.Cog(self)).get_commands():
                 liste_commands.append(command)
             
             liste_help_cog.append(self.get_cog(extension))
 
-    async def on_ready(self):
-        print(f"Connecté en tant que {bot.user}")
+        await self.add_cog(Global(self))
+
+        for command in self.cogs.get("Global", commands.Cog(self)).get_commands():
+            liste_commands.append(command)
+
+        liste_help_cog.append(self.get_cog("Global"))
+
         synced = await bot.tree.sync()
         print(f'{len(synced)} commande(s) syncronisée(s)')
+
+    async def on_ready(self):
+        print(f"Connecté en tant que {bot.user}")
 
 intents = discord.Intents.all()
 
 bot = Le_bot(command_prefix= "$", description= "Le bot qui sers à tout et à rien !!!", intents=intents, owner_id= 948981926264467466)
 
-bot.remove_command("help")
-
-@bot.command(name= "help", brief= "Juste de l'aide", description= "Donne de l'aide sur une commande ou sur un groupe de commandes(cog).")
-async def help(ctx: commands.Context, command = None):
-    if command == None:
-        em = discord.Embed(title= "Help", description= "Utilisez cette même commande avec le nom de la commande ou du groupe de commandes(cog) que vous voulez comprendre pour avoir de l'aide.", color= ctx.author.color)
-
-        em.add_field(name= "Modération", value= "Commandes: 'message', 'kick'")
-        em.add_field(name= "Tests", value= "Commandes: 'bouton', 'menu', 'download'")
-        em.add_field(name= "Tutos", value= "Commandes: 'exos_select'")
-        em.add_field(name= "Global", value= "Commande = 'help'")
-    else:
-        for command_help in liste_commands:
-            if command == command_help.name or command in command_help.aliases:
-                if command_help.hidden:
-                    em = discord.Embed(title= "Cette commande/cog n'est pas disponible.")
-                    break
-                else:
-                    em = discord.Embed(title= command_help.name, description= command_help.description, color= ctx.author.color)
-
-                    aliases = command_help.aliases
-
-                    if len(aliases) != 0:
-                        em.add_field(name= "Aliases", value= f"{", ".join(aliases)}.")
-
-                    break
-        else:
-            for cog in liste_help_cog:
-                if command == cog.__cog_name__:
-                    em = discord.Embed(title= cog.__cog_name__, description= cog.description, color= ctx.author.color)
-
-                    for commands in cog.get_commands():
-                        if not commands.hidden:
-                            em.add_field(name= commands.name, value= commands.brief)
-                    break
-            else:
-                em = discord.Embed(title= "Cette commande/cog n'est pas disponible.")
-
-    await ctx.send(embed= em)
-
 keep_alive()
 
 bot.run(token= token)
+
+
