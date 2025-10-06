@@ -42,7 +42,7 @@ class Global(commands.Cog):
                         break
             else:
                 for cog in liste_help_cog:
-                    if command == cog.__cog_name__:
+                    if command == cog.__cog_name__ or command == cog.__cog_name__.lower():
                         em = discord.Embed(title= cog.__cog_name__, description= cog.description, color= ctx.author.color)
 
                         for commands_help in cog.get_commands():
@@ -96,4 +96,5 @@ bot = Le_bot(command_prefix= "$", description= "Le bot qui sers à tout et à ri
 keep_alive()
 
 bot.run(token= token)
+
 
