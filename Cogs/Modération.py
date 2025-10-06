@@ -1,11 +1,20 @@
 import discord
 from discord.ext import commands
 from Stocks.Commands_stock import check_me
+from discord import app_commands
 
 class Modération(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.description = "Cog spécialisé dans les commandes de moderations."
+
+    @app_commands.command(name= "kick", description= "Kick un membre pour une raison(optionel)")
+    async def test(self, interaction: discord.Interaction, member: discord.Member, reason: str | None = None):
+        await member.kick(reason= reason)
+        if reason == None:
+            await interaction.response.send_message(content= f"Le membre {member.name} à été kick du serveur par {interaction.user.name} pour aucune raison.")
+        else:
+            await interaction.response.send_message(content= f"Le membre {member.name} à été kick du serveur par {interaction.user.name} pour la raison: {reason}.")
 
     @commands.command(name= "message", aliases= ["mes", "ping"], description= "Envois un message à qui tu veut.", brief= "Envois un mp.")
     @check_me(1417199810099937411, 1382302424366186516, 1382303940921659412, 1382455975549599854)
@@ -21,4 +30,3 @@ class Modération(commands.Cog):
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Modération(bot))
-
