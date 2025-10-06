@@ -82,10 +82,11 @@ class Le_bot(commands.Bot):
 
         liste_help_cog.append(self.get_cog("Global"))
 
-    async def on_ready(self):
-        print(f"Connecté en tant que {bot.user}")
         synced = await bot.tree.sync()
         print(f'{len(synced)} commande(s) syncronisée(s)')
+
+    async def on_ready(self):
+        print(f"Connecté en tant que {bot.user}")
 
 intents = discord.Intents.all()
 
