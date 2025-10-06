@@ -9,9 +9,9 @@ class Modération(commands.Cog):
         self.description = "Cog spécialisé dans les commandes de moderations."
 
     @app_commands.command(name= "kick", description= "Kick un membre pour une raison(optionel)")
-    @check_me(1382302424366186516, 1382303940921659412, 1382455975549599854)
+    @check_me(1382302424366186516, 1382303940921659412, 1382455975549599854, 1410343531402367006)
     async def test(self, interaction: discord.Interaction, member: discord.Member, reason: str | None = None):
-        await member.kick(reason= reason)
+        # await member.kick(reason= reason)
         if reason == None:
             await interaction.response.send_message(content= f"Le membre {member.name} à été kick du serveur par {interaction.user.name} pour aucune raison.")
         else:
@@ -31,5 +31,3 @@ class Modération(commands.Cog):
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Modération(bot))
-
-
