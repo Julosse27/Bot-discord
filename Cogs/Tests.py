@@ -37,15 +37,13 @@ class Menu_view(discord.ui.View):
         self.add_item(Menu())
 
 class Tests(commands.Cog):
-    def slashs_commands(self):
-        @self.bot.tree.command(name= "test_slash", description= "Envois un message 'test'")
-        async def test_slash(interaction: discord.Interaction):
-            await interaction.response.send_message(content= "test")
-
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.description = "Le cog basic ou tout est testé, j'ai commencé à coder ce avec ces commandes."
-        self.slashs_commands()
+
+    @app_commands.command(name= "test_slash", description= "Envois un message 'test'")
+    async def test_slash(self, interaction: discord.Interaction):
+        await interaction.response.send_message(content= "test")
         
     @commands.command(name= "bouton", aliases= ["testb"], brief= "Fait spawn un bouton.", description= "Fait spawn le bouton de test.")
     async def bouton(self, ctx: commands.Context):
