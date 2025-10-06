@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-from Stocks.Commands_stock import check_me
 from Stocks.File_stock.Recup_fichiers import recup_path, file_not_exist
 from discord import app_commands
 
@@ -68,5 +67,3 @@ class Tests(commands.Cog):
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Tests(bot))
-
-
