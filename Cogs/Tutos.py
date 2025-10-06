@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from Stocks.Exo_stock import exos
-from Stocks.Commands_stock import check_me
+from Stocks.Commands_stock import check_basic_command
 
 class Menu(discord.ui.Select):
     def __init__(self):
@@ -32,10 +32,10 @@ class Menu_view(discord.ui.View):
 class Tutos(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-        self.description = "Tout les tutos doivents bien venir de quesque part non ?"
+        self.description = "Tout les tutos doivents bien venir de quelque part non ?"
 
     @commands.command(name = "exos_select", aliases = ["exos", "exo"], description = "Une commande qui permet de s'exercer aux diferents tutos.", brief = "Fait spawn un exo.")
-    @check_me(1417199810099937411)
+    @check_basic_command(1417199810099937411)
     async def monExo(self, ctx: commands.Context):
         message = await ctx.send(view= Menu_view())
 

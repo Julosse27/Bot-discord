@@ -1,9 +1,7 @@
 from discord.ext import commands
-from requests import get
+from discord import app_commands, Interaction
 
-contenu_f = {"test.txt": get("https://bot-discord-13wx.onrender.com/test.txt").content}
-
-def check_me(*ids):
+def check_basic_command(*ids):
         
         async def predicate(ctx):
             for id in ids:
@@ -14,3 +12,15 @@ def check_me(*ids):
                 return False
 
         return commands.check(predicate)
+
+def check_slash_command(*ids):
+        
+        async def predicate(interaction: Interaction):
+            for id in ids:
+                if interaction.user.get_role(id) != None:
+                    return True
+            else:
+                await interaction.response.send_message(content= "Vous n'avez pas les permisions requises !!!")
+                return False
+
+        return app_commands.check(predicate)
