@@ -2,6 +2,9 @@ import os
 import discord
 from discord.ext import commands
 from keep_alive import keep_alive
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 token = os.getenv("DISCORD_TOKEN", "")
 
@@ -84,10 +87,10 @@ class Le_bot(commands.Bot):
         liste_help_cog.append(self.get_cog("Global"))
 
         synced = await bot.tree.sync()
-        print(f'{len(synced)} commande(s) syncronisée(s)')
+        logging.info(f'{len(synced)} commande(s) syncronisée(s)')
 
     async def on_ready(self):
-        print(f"Connecté en tant que {bot.user}")
+        logging.info(f"Connecté en tant que {bot.user}")
 
 intents = discord.Intents.all()
 
@@ -96,5 +99,3 @@ bot = Le_bot(command_prefix= "$", description= "Le bot qui sers à tout et à ri
 keep_alive()
 
 bot.run(token= token)
-
-
