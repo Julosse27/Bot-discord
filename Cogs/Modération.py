@@ -1,12 +1,17 @@
 import discord
 from discord.ext import commands
 from Stocks.Commands_stock import check_me
+from discord import app_commands
 
 
 class Modération(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.description = "Cog spécialisé dans les commandes de moderations."
+
+    @app_commands.command(name= "re_test", description= "Une autre commande qui affiche 'test'")
+    async def test(self, interaction: discord.Interaction):
+        await interaction.response.send_message("re_test")
 
     @commands.command(name= "message", aliases= ["mes", "ping"], description= "Envois un message à qui tu veut.", brief= "Envois un mp.")
     @check_me(1417199810099937411, 1382302424366186516, 1382303940921659412, 1382455975549599854)
