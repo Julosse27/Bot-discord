@@ -2,9 +2,7 @@ import os
 import discord
 from discord.ext import commands
 from keep_alive import keep_alive
-import dotenv
 
-dotenv.load_dotenv(".env")
 token = os.getenv("DISCORD_TOKEN", "")
 
 class Global(commands.Cog):
@@ -65,7 +63,9 @@ class Le_bot(commands.Bot):
 
         liste_commands = []
         liste_help_cog = []
-        
+
+        self.remove_command("help")
+
         for extension in liste_cogs:
             
             await self.load_extension(f"Cogs.{extension}")
