@@ -65,5 +65,13 @@ class Tests(commands.Cog):
         else:
             await ctx.send(content= f"Voici le fichier {fichier} que vous demandez.",file= discord.File(file, fichier))
 
+    @app_commands.command(name = "download", description= "Il téléchargera un fichier de texte simple créé pour le test spécialement")
+    async def tel(self, ctx: discord.Interaction, fichier: str):
+        file = recup_path(fichier)
+        if file == file_not_exist:
+            await ctx.response.send_message(content= f"Désolé le fichier {fichier} n'existe pas dans ma mémoire", ephemeral= True)
+        else:
+            await ctx.response.send_message(content= f"Voici le fichier {fichier} que vous demandez.",file= discord.File(file, fichier), ephemeral= True)
+
 async def setup(bot: commands.Bot):
     await bot.add_cog(Tests(bot))
