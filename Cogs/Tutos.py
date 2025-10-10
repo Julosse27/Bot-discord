@@ -47,8 +47,7 @@ class Tutos(commands.Cog):
                 break
         else:
             sleep(2)
-            await interaction.response.send_message("Cet exercice n'existe pas.")
-        await interaction.response.send_message("Je me prépare.")
+            await interaction.edit_original_response(content= "Cet exercice n'existe pas.")
 
         for view, enonce, bonne_rep in questions:
             await interaction.edit_original_response(embed= discord.Embed(color= interaction.user.color, title= f"Question {questions.index((view, enonce, bonne_rep)) + 1}", description= enonce), view= view)
