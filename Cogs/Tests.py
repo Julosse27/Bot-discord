@@ -45,10 +45,10 @@ class Tests(commands.Cog):
     @app_commands.command(name= "timestamp", description= "Envois un timestamp dans un Embed.")
     async def timestamp(self, interaction: discord.Interaction, secondes: int, minutes: int = 0, heures: int = 0, jours: int = 0, mois: int = 0, années: int = 0):
         if 0 == minutes == heures == jours == mois == années:
-            timestamp = get_defer_time(secondes)
+            timestamp = get_defer_time(secondes).timestamp() #type: ignore
         else:
-            timestamp = get_defer_time([secondes, minutes, heures, jours, mois, années])
-        em = discord.Embed(title= "Test du timestamp", description= "Le voici:", timestamp= timestamp) #type: ignore
+            timestamp = get_defer_time([secondes, minutes, heures, jours, mois, années]).timestamp() #type: ignore
+        em = discord.Embed(title= "Test du timestamp", description= f"Le voici: <t:{timestamp}:R>") #type: ignore
         await interaction.response.send_message(embed= em)
 
     @app_commands.command(name= "test_slash", description= "Envois un message 'test'")
