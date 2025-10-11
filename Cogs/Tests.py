@@ -1,7 +1,9 @@
 import discord
 from discord.ext import commands
 from Stocks.File_stock.Recup_fichiers import recup_path, file_not_exist
+from Stocks.Commands_stock import get_defer_time
 from discord import app_commands
+from time import sleep, asctime
 
 class View(discord.ui.View):
     def __init__(self, *, timeout: float | None = None):
@@ -28,7 +30,7 @@ class Menu(discord.ui.Select):
         super().__init__(placeholder="Quel test voulez vous ?", min_values= 1, max_values= 1, options= options)
 
     async def callback(self, interaction: discord.Interaction):
-        await interaction.response.send_message(f'Tu as pris {self.values}')
+        await interaction.response.send_message(f'Tu as pris {self.values[0]}')
 
 class Menu_view(discord.ui.View):
     def __init__(self):
@@ -40,9 +42,24 @@ class Tests(commands.Cog):
         self.bot = bot
         self.description = "Le cog basic ou tout est testé, j'ai commencé à coder ce avec ces commandes."
 
+    @app_commands.command(name= "timestamp", description= "Envois un timestamp dans un Embed.")
+    async def timestamp(self, interaction: discord.Interaction, secondes: int, minutes: int = 0, heures: int = 0, jours: int = 0, mois: int = 0, années: int = 0):
+        if 0 == minutes == heures == jours == mois == années:
+            timestamp = get_defer_time(secondes)
+        else:
+            timestamp = get_defer_time([secondes, minutes, heures, jours, mois, années])
+        em = discord.Embed(title= "Test du timestamp", description= "Le voici:", timestamp= timestamp) #type: ignore
+        await interaction.response.send_message(embed= em)
+
     @app_commands.command(name= "test_slash", description= "Envois un message 'test'")
     async def test_slash(self, interaction: discord.Interaction):
         await interaction.response.send_message(content= "test")
+
+    @commands.command(name= "sleep", aliases= ["tests"], brief= "Envoie une réponse en décallé.", description= "Envois 'test' 3 secondes après l'envoi de la commande.")
+    async def defer(self, ctx: commands.Context):
+        message = await ctx.send("Je suis en train d'écrire.")
+        sleep(3)
+        await message.edit(content= "Ma réponse est 'test")
         
     @commands.command(name= "bouton", aliases= ["testb"], brief= "Fait spawn un bouton.", description= "Fait spawn le bouton de test.")
     async def bouton(self, ctx: commands.Context):
