@@ -1,6 +1,6 @@
 from discord.ext import commands
 from discord import app_commands, Interaction, datetime
-from time import asctime
+from time import asctime, sleep
 
 def check_basic_command(*ids):
     
@@ -198,4 +198,7 @@ async def timer(secondes: int, fonction, begining_rep: str = "", end_rep: str = 
 
         await fonction(content= message_content)
 
+        sleep(1)
+
     return True
+
