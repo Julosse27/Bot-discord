@@ -58,7 +58,7 @@ class Tests(commands.Cog):
             timestamp = get_defer_time(secondes).timestamp() #type: ignore
         else:
             timestamp = get_defer_time([secondes, minutes, heures, jours, mois, années]).timestamp() #type: ignore
-        em = discord.Embed(title= "Test du timestamp", description= f"Le voici:") #type: ignore
+        em = discord.Embed(title= "Test du timestamp", description= f"Le voici: <t:{timestamp}:R>") #type: ignore
         await interaction.response.send_message(embed= em)
 
     @app_commands.command(name= "test_slash", description= "Envois un message 'test'")

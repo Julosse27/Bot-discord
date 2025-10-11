@@ -70,7 +70,7 @@ def get_defer_time(defer: int | list[int], /,format: bool = False) -> list[int] 
         Définit soit juste le nombre de secondes dont le programe doit avancer
         le temps actuel ou dans le cas d'une liste définit dans l'ordre :variable:`secondes`,
         :variable:`minutes`, :variable:`heures`, :variable:`jours`, :variable:`mois`, :variable:`année`
-
+        
     format: :class:`bool` (optionel)
 
         Définit le format de l'heure dont la fonction doit renvoyer l'information.
