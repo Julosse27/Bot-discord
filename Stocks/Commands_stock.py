@@ -2,8 +2,6 @@ from discord.ext import commands
 from discord import app_commands, Interaction, datetime
 from time import asctime
 
-mois = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-
 def check_basic_command(*ids):
     
     async def predicate(ctx):
@@ -41,6 +39,9 @@ def get_actual_time(format: bool = True) -> list[int] | datetime:
         De base le format :class:`list` représenté `True` mais peut être changé pour
         `False` correspondant à :class:`~discord.datetime`.
     """
+
+    mois = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
     date_time = asctime()
 
     annee: int = int(date_time[20:])
@@ -55,7 +56,7 @@ def get_actual_time(format: bool = True) -> list[int] | datetime:
     else:
         return datetime(annee, mois_date, jour, heures, minutes, secondes)
 
-def get_defer_time(defer: int | list[int], /,format: bool = False) -> list[int] | datetime:
+def get_defer_time(defer: int | list[int], /,format: bool = False) -> list[int] | datetime | None:
     """
     C'est une fonction qui va donner le temps soit dans une liste ou dans une classe
     spéciale pour un bot discord.
@@ -69,16 +70,20 @@ def get_defer_time(defer: int | list[int], /,format: bool = False) -> list[int] 
         Définit soit juste le nombre de secondes dont le programe doit avancer
         le temps actuel ou dans le cas d'une liste définit dans l'ordre :variable:`secondes`,
         :variable:`minutes`, :variable:`heures`, :variable:`jours`, :variable:`mois`, :variable:`année`
+        
     format: :class:`bool` (optionel)
 
         Définit le format de l'heure dont la fonction doit renvoyer l'information.
         De base le format :class:`~discord.datetime` représenté `False` mais peut être changé pour
         `True` correspondant à :class:`list`.
+
     Raises
     --------
     ValueError
-        Le nombre ou les nombres dans le paramètre :parameter:`defer` ne correspondent pas aux limites assignées.
+        Retourne :arg:`None` si un nombre dépase sa limite assignée
     """
+
+    mois = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
     date_time = asctime()
 
@@ -90,8 +95,8 @@ def get_defer_time(defer: int | list[int], /,format: bool = False) -> list[int] 
     secondes: int = int(date_time[17:19])
 
     if type(defer) == int:
-        if defer >= 60:
-            raise ValueError("Le nombre ou les nombre dans le paramètre defer ne correspondent pas aux exigences de niveau de temps.")
+        if defer > 60:
+            return
         if defer + secondes >= 60:
             minutes += 1
             secondes: int = secondes + defer - 60
@@ -102,12 +107,16 @@ def get_defer_time(defer: int | list[int], /,format: bool = False) -> list[int] 
         date_time = [secondes, minutes, heures, jour, mois_date, annee]
         limites = [60, 60, 24, 31, 12, None]
         for i in range(len(defer)): #type: ignore
-            if limites[i] != None and not defer[i] <= limites[i]: #type: ignore
+            if limites[i] == None:
+                date_time[i] += defer[i] #type: ignore
+            elif defer[i] <= limites[i]: #type: ignore
                 if date_time[i] + defer[i] >= limites[i]: #type: ignore
                     date_time[i+1] += 1
                     date_time[i] = date_time[i] + defer[i] - limites[i] #type: ignore
-            elif defer[i] <= limites[i]: #type: ignore
-                raise ValueError("Le nombre ou les nombre dans le paramètre defer ne correspondent pas aux exigences de niveau de temps.")
+                else:
+                    date_time[i] += defer[i] #type: ignore
+            else:
+                return
 
         reponse = list(reversed(date_time))
 
@@ -115,3 +124,78 @@ def get_defer_time(defer: int | list[int], /,format: bool = False) -> list[int] 
         return reponse
     else:
         return datetime(year= reponse[0], month= reponse[1], day= reponse[2], hour= reponse[3], minute= reponse[4], second= reponse[5])
+
+async def timer(secondes: int, fonction, begining_rep: str = "", end_rep: str = "", minutes: int = 0, heures: int = 0, jours: int = 0, mois: int = 0, annee: int = 0) -> bool: #type:ignore
+    r"""|coro|
+
+    Cette fonction va elle même modifier le message qui a été préalablement ecrit avec un
+    minuteur jusqu'au moment décidé.
+
+    Pour fonctionner cette fonction doit récupérer l'interaction :class:`~discord.Interaction`
+    ou le contexte :class:`~commands.Context`. 
+    
+    Paramètres
+    ------------
+    secondes: :class:`int`
+
+        Le nombre de secondes que le minuteur doit afficher.
+    fonction:
+
+        La fonction que doit utiliser cette fonction pour pouvoir modifier le message.
+    begining_rep: :class:`str`
+
+        Le texte qui prècède le timer
+    end_rep: :class:`str`
+
+        Le texte qui suit le timer.
+    minutes: Optionel[:class:`int`]
+
+        Le nombre de minutes que le minuteur doit afficher.
+    heures: Optionel[:class:`int`]
+
+        Le nombre de heures que le minuteur doit afficher.
+    jours: Optionel[:class:`int`]
+
+        Le nombre de jours que le minuteur doit afficher.
+    mois: Optionel[:class:`int`]
+
+        Le nombre de mois que le minuteur doit afficher.
+    annee: Optionel[:class:`int`]
+
+        Le nombre de annee que le minuteur doit afficher.
+    """
+
+    tps = [secondes, minutes, heures, jours, mois, annee]
+    noms = ["secondes", 'minutes', "heures", "jours", "mois", "année"]
+    limites = [60, 60, 24, None, 12]
+    limites_mois = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    if get_defer_time(tps) == None:
+        return False
+
+    while True:
+        tps[0] -= 1
+        for i in range(len(tps) - 1):
+            if tps[i] < 0:
+                tps[i + 1] -= 1
+                if i != 3:
+                    tps[i] = limites[i]
+                else:
+                    tps[3] = limites_mois[get_actual_time()[1]] #type: ignore
+        
+        arreter = True
+        rep = []
+        for i in range(len(tps)):
+            if tps[i] != 0:
+                arreter = False
+                rep.append(f"{tps[i]} {noms[i]}")
+        
+        if arreter:
+            break
+
+        rep = " et ".join(rep)
+
+        message_content = f"{begining_rep} {rep} {end_rep}"
+
+        await fonction(content= message_content)
+
+    return True

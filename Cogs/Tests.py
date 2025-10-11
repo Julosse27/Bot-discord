@@ -1,9 +1,9 @@
 import discord
 from discord.ext import commands
 from Stocks.File_stock.Recup_fichiers import recup_path, file_not_exist
-from Stocks.Commands_stock import get_defer_time
+from Stocks.Commands_stock import get_defer_time, timer
 from discord import app_commands
-from time import sleep, asctime
+from time import sleep
 
 class View(discord.ui.View):
     def __init__(self, *, timeout: float | None = None):
@@ -41,6 +41,16 @@ class Tests(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.description = "Le cog basic ou tout est testé, j'ai commencé à coder ce avec ces commandes."
+
+    @app_commands.command(name= "timer", description= "Démare un timer et fait une truc secret à la fin.")
+    async def timer_command(self, interaction: discord.Interaction, secondes: int, minutes: int = 0, heures: int = 0, jours: int = 0, mois: int = 0, annee: int = 0):
+        await interaction.response.send_message("Je me prépare")
+        fonction = interaction.edit_original_response
+        if await timer(secondes, fonction, "Il reste", "avant la surprise.", minutes, heures, jours, mois, annee):
+            await fonction(content= "Voila votre surprise: 'Vous m'avez testé'")
+        else:
+            await fonction(content= "Il y a eu un problème dans le procesus votre récompense à été donc annulée.")
+
 
     @app_commands.command(name= "timestamp", description= "Envois un timestamp dans un Embed.")
     async def timestamp(self, interaction: discord.Interaction, secondes: int, minutes: int = 0, heures: int = 0, jours: int = 0, mois: int = 0, années: int = 0):
