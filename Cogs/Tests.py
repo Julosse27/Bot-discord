@@ -44,7 +44,7 @@ class Tests(commands.Cog):
 
     @app_commands.command(name= "timer", description= "Démare un timer et fait une truc secret à la fin.")
     async def timer_command(self, interaction: discord.Interaction, secondes: int, minutes: int = 0, heures: int = 0, jours: int = 0, mois: int = 0, annee: int = 0):
-        await interaction.response.send_message("Je me prépare")
+        await interaction.response.defer()
         fonction = interaction.edit_original_response
         if await timer(secondes, fonction, "Il reste", "avant la surprise.", minutes, heures, jours, mois, annee):
             await fonction(content= "Voila votre surprise: 'Vous m'avez testé'")
@@ -102,3 +102,4 @@ class Tests(commands.Cog):
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Tests(bot))
+
