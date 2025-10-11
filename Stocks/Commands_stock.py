@@ -198,7 +198,6 @@ async def timer(secondes: int, fonction, begining_rep: str = "", end_rep: str = 
 
         await fonction(content= message_content)
 
-        sleep(1)
-
     return True
+
 
