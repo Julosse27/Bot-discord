@@ -1,5 +1,5 @@
 from discord.ext import commands
-from discord import app_commands, Interaction, datetime
+from discord import app_commands, Interaction, datetime, Message, InteractionMessage
 from time import asctime, sleep
 
 def check_basic_command(*ids):
@@ -70,7 +70,7 @@ def get_defer_time(defer: int | list[int], /,format: bool = False) -> list[int] 
         Définit soit juste le nombre de secondes dont le programe doit avancer
         le temps actuel ou dans le cas d'une liste définit dans l'ordre :variable:`secondes`,
         :variable:`minutes`, :variable:`heures`, :variable:`jours`, :variable:`mois`, :variable:`année`
-        
+
     format: :class:`bool` (optionel)
 
         Définit le format de l'heure dont la fonction doit renvoyer l'information.
@@ -125,7 +125,7 @@ def get_defer_time(defer: int | list[int], /,format: bool = False) -> list[int] 
     else:
         return datetime(year= reponse[0], month= reponse[1], day= reponse[2], hour= reponse[3], minute= reponse[4], second= reponse[5])
 
-async def timer(secondes: int, fonction, begining_rep: str = "", end_rep: str = "", minutes: int = 0, heures: int = 0, jours: int = 0, mois: int = 0, annee: int = 0) -> bool: #type:ignore
+async def timer(secondes: int, message: Message | InteractionMessage, begining_rep: str = "", end_rep: str = "", minutes: int = 0, heures: int = 0, jours: int = 0, mois: int = 0, annee: int = 0) -> bool: #type:ignore
     r"""|coro|
 
     Cette fonction va elle même modifier le message qui a été préalablement ecrit avec un
@@ -178,7 +178,7 @@ async def timer(secondes: int, fonction, begining_rep: str = "", end_rep: str = 
             if tps[i] < 0:
                 tps[i + 1] -= 1
                 if i != 3:
-                    tps[i] = limites[i]
+                    tps[i] = limites[i] - 1
                 else:
                     tps[3] = limites_mois[get_actual_time()[1]] #type: ignore
         
@@ -196,11 +196,8 @@ async def timer(secondes: int, fonction, begining_rep: str = "", end_rep: str = 
 
         message_content = f"{begining_rep} {rep} {end_rep}"
 
-        await fonction(content= message_content)
+        await message.edit(content= message_content)
 
         sleep(1)
 
     return True
-
-
-
