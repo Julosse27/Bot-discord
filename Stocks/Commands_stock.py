@@ -1,5 +1,5 @@
 from discord.ext import commands
-from discord import app_commands, Interaction, datetime, Message, InteractionMessage
+from discord import app_commands, Interaction, datetime, Message
 from time import asctime, sleep
 
 def check_basic_command(*ids):
@@ -125,7 +125,7 @@ def get_defer_time(defer: int | list[int], /,format: bool = False) -> list[int] 
     else:
         return datetime(year= reponse[0], month= reponse[1], day= reponse[2], hour= reponse[3], minute= reponse[4], second= reponse[5])
 
-async def timer(secondes: int, message: Message | InteractionMessage, begining_rep: str = "", end_rep: str = "", minutes: int = 0, heures: int = 0, jours: int = 0, mois: int = 0, annee: int = 0) -> bool: #type:ignore
+async def timer(secondes: int, message: Message, begining_rep: str = "", end_rep: str = "", minutes: int = 0, heures: int = 0, jours: int = 0, mois: int = 0, annee: int = 0) -> bool: #type:ignore
     r"""|coro|
 
     Cette fonction va elle même modifier le message qui a été préalablement ecrit avec un
