@@ -40,9 +40,9 @@ def c():
 def d():
     return recup_fichier("Kenji_Battle/V2/Kenji_Battle_Ressource.pyxres")
 
-@app.route("/telechargement_logo.bmp")
+@app.route("/telechargement_logo.png")
 def de():
-    return recup_fichier("logo_tel.bmp")
+    return recup_fichier("logo_tel.png")
 
 def run():
     app.run(host= "0.0.0.0", port= 8080)
@@ -50,3 +50,4 @@ def run():
 def keep_alive():
     t = Thread(target= run)
     t.start()
+
