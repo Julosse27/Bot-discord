@@ -38,7 +38,7 @@ def c():
 
 @app.route("/Kenji_Battle/V2/kenji_battle_ressources.pyxres")
 def d():
-    return recup_fichier("Kenji_Battle/V2/kenji_battle_ressource.pyxres")
+    return recup_fichier("Kenji_Battle/V2/kenji_battle_ressources.pyxres")
 
 @app.route("/telechargement_logo.png")
 def de():
@@ -50,5 +50,6 @@ def run():
 def keep_alive():
     t = Thread(target= run)
     t.start()
+
 
 
