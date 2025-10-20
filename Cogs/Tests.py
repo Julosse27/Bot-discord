@@ -42,14 +42,13 @@ class Tests(commands.Cog):
         self.bot = bot
         self.description = "Le cog basic ou tout est testé, j'ai commencé à coder ce avec ces commandes."
 
-    @app_commands.command(name= "timer", description= "Démare un timer et fait une truc secret à la fin.")
-    async def timer_command(self, interaction: discord.Interaction, secondes: int, minutes: int = 0, heures: int = 0, jours: int = 0, mois: int = 0, annee: int = 0):
-        await interaction.response.send_message("Je me prépare")
-        fonction = interaction.edit_original_response
-        if await timer(secondes, fonction, "Il reste", "avant la surprise.", minutes, heures, jours, mois, annee):
-            await fonction(content= "Voila votre surprise: 'Vous m'avez testé'")
+    @commands.command(name= "timer", aliases= ["testt"], description= "Démare un timer et fait une truc secret à la fin.")
+    async def timer_command(self, ctx: commands.Context, secondes: int, minutes: int = 0, heures: int = 0, jours: int = 0, mois: int = 0, annee: int = 0):
+        message = await ctx.send(content= "Je me prépare.")
+        if await timer(secondes, message, "Il reste", "avant la surprise.", minutes, heures, jours, mois, annee):
+            await message.edit(content= "Voila votre surprise: 'Vous m'avez testé'")
         else:
-            await fonction(content= "Il y a eu un problème dans le procesus votre récompense à été donc annulée.")
+            await message.edit(content= "Il y a eu un problème dans le procesus votre récompense à été donc annulée.")
 
 
     @app_commands.command(name= "timestamp", description= "Envois un timestamp dans un Embed.")
@@ -58,7 +57,7 @@ class Tests(commands.Cog):
             timestamp = get_defer_time(secondes).timestamp() #type: ignore
         else:
             timestamp = get_defer_time([secondes, minutes, heures, jours, mois, années]).timestamp() #type: ignore
-        em = discord.Embed(title= "Test du timestamp", description= f"Le voici: <t:{timestamp}:R>") #type: ignore
+        em = discord.Embed(title= "Test du timestamp", description= f"Le voici:") #type: ignore
         await interaction.response.send_message(embed= em)
 
     @app_commands.command(name= "test_slash", description= "Envois un message 'test'")
