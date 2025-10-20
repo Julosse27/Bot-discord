@@ -40,6 +40,10 @@ def c():
 def d():
     return recup_fichier("Kenji_Battle/V2/Kenji_Battle_Ressource.pyxres")
 
+@app.route("/telechargement_logo.bmp")
+def de():
+    return recup_fichier("logo_tel.bmp")
+
 def run():
     app.run(host= "0.0.0.0", port= 8080)
 
