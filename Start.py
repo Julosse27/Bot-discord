@@ -1,7 +1,9 @@
 import os
 import discord
+from discord import app_commands
 from discord.ext import commands
 from keep_alive import keep_alive
+from Stocks.File_stock.Recup_fichiers import recup_path
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -12,6 +14,10 @@ class Global(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.description = "Groupe de commandes générales presque basiques."
+
+    @app_commands.command(name= "tel_jeu", description= "Vous donne un fichier qui vous permettra d'installer un jeu sur votre ordi.")
+    async def tel(self, interaction: discord.Interaction):
+        await interaction.response.send_message("Voila le fichier, vous pouvez l'executer sans problème je ne sais juste pas comment me mettre l'auteur. Votre antivirus va surement vous le bloquer.", file= discord.File(recup_path("télécharger.exe")))
 
     @commands.command(name= "help", brief= "Un peu d'aide.", description= "Donne de l'aide sur une commande ou un groupe commandes.")
     async def help(self, ctx: commands.Context, command = None):
