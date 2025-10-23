@@ -44,12 +44,25 @@ def d():
 def de():
     return recup_fichier("logo_tel.png")
 
+@app.route("/Kenji_Battle/V0.5/kenji_battle_ressources.pyxres")
+def ge():
+    return 
+
+@app.route("/Kenji_Battle/V0.5/Données.sq3")
+def gd():
+    return recup_fichier('Kenji_Battle/V0.5/Données.sq3')
+
+@app.route("/Kenji_Battle/V0.5/architecture.txt")
+def ls():
+    return recup_fichier("Kenji_Battle/V0.5/architecture.txt")
+@app.route('/Kenji_Battle/V0.5/V0.5.py')
+
+def ld():
+    return recup_fichier("Kenji_Battle/V0.5/V0.5.py")
+
 def run():
     app.run(host= "0.0.0.0", port= 8080)
 
 def keep_alive():
     t = Thread(target= run)
     t.start()
-
-
-
