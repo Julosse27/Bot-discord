@@ -46,11 +46,7 @@ def de():
 
 @app.route("/Kenji_Battle/V0.5/kenji_battle_ressources.pyxres")
 def ge():
-    return 
-
-@app.route("/Kenji_Battle/V0.5/Données.sq3")
-def gd():
-    return recup_fichier('Kenji_Battle/V0.5/Données.sq3')
+    return recup_fichier("/Kenji_Battle/V0.5/kenji_battle_ressources.pyxres")
 
 @app.route("/Kenji_Battle/V0.5/architecture.txt")
 def ls():
@@ -66,3 +62,4 @@ def run():
 def keep_alive():
     t = Thread(target= run)
     t.start()
+
