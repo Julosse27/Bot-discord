@@ -126,45 +126,6 @@ def get_defer_time(defer: int | list[int], /,format: bool = False) -> list[int] 
         return datetime(year= reponse[0], month= reponse[1], day= reponse[2], hour= reponse[3], minute= reponse[4], second= reponse[5])
 
 async def timer(secondes: int, message: Message, begining_rep: str = "", end_rep: str = "", minutes: int = 0, heures: int = 0, jours: int = 0, mois: int = 0, annee: int = 0) -> bool: #type:ignore
-    r"""|coro|
-
-    Cette fonction va elle même modifier le message qui a été préalablement ecrit avec un
-    minuteur jusqu'au moment décidé.
-
-    Pour fonctionner cette fonction doit récupérer l'interaction :class:`~discord.Interaction`
-    ou le contexte :class:`~commands.Context`. 
-    
-    Paramètres
-    ------------
-    secondes: :class:`int`
-
-        Le nombre de secondes que le minuteur doit afficher.
-    fonction:
-
-        La fonction que doit utiliser cette fonction pour pouvoir modifier le message.
-    begining_rep: :class:`str`
-
-        Le texte qui prècède le timer
-    end_rep: :class:`str`
-
-        Le texte qui suit le timer.
-    minutes: Optionel[:class:`int`]
-
-        Le nombre de minutes que le minuteur doit afficher.
-    heures: Optionel[:class:`int`]
-
-        Le nombre de heures que le minuteur doit afficher.
-    jours: Optionel[:class:`int`]
-
-        Le nombre de jours que le minuteur doit afficher.
-    mois: Optionel[:class:`int`]
-
-        Le nombre de mois que le minuteur doit afficher.
-    annee: Optionel[:class:`int`]
-
-        Le nombre de annee que le minuteur doit afficher.
-    """
-
     tps = [secondes, minutes, heures, jours, mois, annee]
     noms = ["secondes", 'minutes', "heures", "jours", "mois", "année"]
     limites = [60, 60, 24, None, 12]
@@ -196,7 +157,10 @@ async def timer(secondes: int, message: Message, begining_rep: str = "", end_rep
 
         message_content = f"{begining_rep} {rep} {end_rep}"
 
-        await message.edit(content= message_content)
+        try:
+            await message.edit(content= message_content)
+        except:
+            return False
 
         sleep(1)
 
