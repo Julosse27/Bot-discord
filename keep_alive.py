@@ -1,6 +1,6 @@
 from flask import Flask
 from threading import Thread
-from Stocks.File_stock.Recup_fichiers import recup_fichier, recup_path
+from Stocks.File_stock.Recup_fichiers import recup_fichier
 
 app = Flask("")
 
@@ -51,6 +51,7 @@ def ge():
 @app.route("/Kenji_Battle/V0.5/architecture.txt")
 def ls():
     return recup_fichier("Kenji_Battle/V0.5/architecture.txt")
+
 @app.route('/Kenji_Battle/V0.5/V0.5.py')
 
 def ld():

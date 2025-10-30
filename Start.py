@@ -15,9 +15,17 @@ class Global(commands.Cog):
         self.bot = bot
         self.description = "Groupe de commandes générales presque basiques."
 
-    @app_commands.command(name= "tel_jeu", description= "Vous donne un fichier qui vous permettra d'installer un jeu sur votre ordi.")
+    @app_commands.command(name= "tel_jeu", description= "Vous donne un lien vers un installateur qui vous permettra d'installer un jeu sur votre ordi.")
     async def tel(self, interaction: discord.Interaction):
-        await interaction.response.send_message("Voila le fichier, vous pouvez l'executer sans problème je ne sais juste pas comment me mettre l'auteur. Votre antivirus va surement vous le bloquer.", file= discord.File(recup_path("télécharger.exe")))
+        """
+        Commande qui renvoie le lien pour télécharger le jeu.
+
+        Parameters
+        -----------
+        interaction: :class:`discord.Interaction`
+            The content of the message to send.
+        """
+        await interaction.response.send_message("Voila le fichier: https://drive.google.com/file/d/1eWzIWn5MFPnkG94zndSagtarWPTPpr97/view?usp=drive_link")
 
     @commands.command(name= "help", brief= "Un peu d'aide.", description= "Donne de l'aide sur une commande ou un groupe commandes.")
     async def help(self, ctx: commands.Context, command = None):
