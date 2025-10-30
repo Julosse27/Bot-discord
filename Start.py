@@ -4,9 +4,9 @@ from discord import app_commands
 from discord.ext import commands
 from keep_alive import keep_alive
 from Stocks.File_stock.Recup_fichiers import recup_path
-import logging
+from logging import basicConfig, INFO, info
 
-logging.basicConfig(level=logging.INFO)
+basicConfig(level= INFO)
 
 token = os.getenv("DISCORD_TOKEN", "")
 
@@ -93,10 +93,10 @@ class Le_bot(commands.Bot):
         liste_help_cog.append(self.get_cog("Global"))
 
         synced = await bot.tree.sync()
-        logging.info(f'{len(synced)} commande(s) syncronisée(s)')
+        info(f'{len(synced)} commande(s) syncronisée(s)')
 
     async def on_ready(self):
-        logging.info(f"Connecté en tant que {bot.user}")
+        info(f"Connecté en tant que {bot.user}")
 
 intents = discord.Intents.all()
 
