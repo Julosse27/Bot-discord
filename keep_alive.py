@@ -53,9 +53,16 @@ def ls():
     return recup_fichier("Kenji_Battle/V0.5/architecture.txt")
 
 @app.route('/Kenji_Battle/V0.5/V0.5.py')
-
 def ld():
     return recup_fichier("Kenji_Battle/V0.5/V0.5.py")
+
+app.route("/Kenji_Battle/V0.5/architecture_exe.txt")
+def dds():
+    return recup_fichier("Kenji_Battle/V0.5/architecture_exe.txt")
+
+app.route('/Kenji_Battle/V0.5/V0.5.exe')
+def fdfdf():
+    return recup_fichier('Kenji_Battle/V0.5/V0.5.exe')
 
 def run():
     app.run(host= "0.0.0.0", port= 8080)
