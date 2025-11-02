@@ -17,15 +17,6 @@ class Global(commands.Cog):
 
     @app_commands.command(name= "tel_jeu", description= "Vous donne un lien vers un installateur qui vous permettra d'installer un jeu sur votre ordi.")
     async def tel(self, interaction: discord.Interaction):
-        """
-        Commande qui renvoie le lien pour télécharger le jeu.
-
-        Parameters
-        -----------
-        interaction: :class:`discord.Interaction`
-            The content of the message to send.
-        """
-        
         await interaction.response.send_message("Voila le fichier: https://drive.google.com/file/d/1eWzIWn5MFPnkG94zndSagtarWPTPpr97/view?usp=drive_link")
 
     @commands.command(name= "help", brief= "Un peu d'aide.", description= "Donne de l'aide sur une commande ou un groupe commandes.")
