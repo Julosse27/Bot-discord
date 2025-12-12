@@ -67,6 +67,10 @@ def dds():
 def fdfdf():
     return recup_fichier('Kenji_Battle/V0.5/V0.5.exe')
 
+@app.route('/Cafet/données.txt')
+def créer():
+    return "Ce texte va être remplacé."
+
 def run():
     app.run(host= "0.0.0.0", port= 8080)
 
@@ -86,3 +90,4 @@ def keep_alive():
     t = Thread(target= run)
     t.start()
     e = Thread(target= ping)
+    e.start()
