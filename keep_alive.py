@@ -1,6 +1,9 @@
 from flask import Flask
 from threading import Thread
 from Stocks.File_stock.Recup_fichiers import recup_fichier
+from requests import get
+from logging import info
+from time import sleep
 
 app = Flask("")
 
@@ -67,6 +70,19 @@ def fdfdf():
 def run():
     app.run(host= "0.0.0.0", port= 8080)
 
+def ping():
+    while True:
+        response = get("https://bot-discord-13wx.onrender.com")
+        if response.status_code == 404:
+            info("L'accés au site est impossible.")
+            return
+        elif response.status_code == 200:
+            info("Tout c'est bien passé durant ce ping.")
+        else:
+            info(f"Le site à un problème inconnu dont le code est {response.status_code}.")
+        sleep(120)
+
 def keep_alive():
     t = Thread(target= run)
     t.start()
+    e = Thread(target= ping)
