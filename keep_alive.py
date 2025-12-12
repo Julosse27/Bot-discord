@@ -1,7 +1,7 @@
 from flask import Flask
 from threading import Thread
 from Stocks.File_stock.Recup_fichiers import recup_fichier
-from requests import get
+from requests import head
 from logging import info
 from time import sleep
 
@@ -76,7 +76,7 @@ def run():
 
 def ping():
     while True:
-        response = get("https://bot-discord-13wx.onrender.com")
+        response = head("https://bot-discord-13wx.onrender.com")
         if response.status_code == 404:
             info("L'accés au site est impossible.")
             return
