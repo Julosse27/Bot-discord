@@ -79,20 +79,21 @@ def créer():
             if test_supp == "réinitialisation":
                 cur.execute("delete from ventes_journalières")
                 conn.commit()
-            data: dict[str, int | str] = request.json
-            noms: list[str] = []
-            donnees: list[str] = []
+            data: dict[str, int | str] = request.get_json()
+            if data != None:
+                noms: list[str] = []
+                donnees: list[str] = []
 
-            for nom, donnee in data.items():
-                if type(donnee) == int:
-                    donnee = str(donnee)
-                elif type(donnee) == str:
-                    donnee = f"'{donnee}'"
-                noms.append(nom)
-                donnees.append(donnee)  # pyright: ignore[reportArgumentType]
+                for nom, donnee in data.items():
+                    if type(donnee) == int:
+                        donnee = str(donnee)
+                    elif type(donnee) == str:
+                        donnee = f"'{donnee}'"
+                    noms.append(nom)
+                    donnees.append(donnee)  # pyright: ignore[reportArgumentType]
 
-            cur.execute(f'''insert into ventes_journalières({", ".join(noms)}) values({", ".join(donnees)})''')
-            conn.commit()
+                cur.execute(f'''insert into ventes_journalières({", ".join(noms)}) values({", ".join(donnees)})''')
+                conn.commit()
             rep = "Il n'y a eu aucun problème."
         except Exception as e:
             rep = f"Il y a eu une erreur:\n{e}"
