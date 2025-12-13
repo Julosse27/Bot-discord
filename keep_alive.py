@@ -83,11 +83,11 @@ def créer():
                 if type(donnee) == int:
                     donnee = str(donnee)
                 elif type(donnee) == str:
-                    donnee = f"{donnee}"
+                    donnee = f"'{donnee}'"
                 noms.append(nom)
                 donnees.append(donnee)  # pyright: ignore[reportArgumentType]
 
-            cur.execute(f"insert into ventes_journalières({", ".join(noms)}) values({", ".join(donnees)})")
+            cur.execute(f'''insert into ventes_journalières({", ".join(noms)}) values({", ".join(donnees)})''')
             conn.commit()
             rep = "Il n'y a eu aucun problème."
         except Exception as e:
