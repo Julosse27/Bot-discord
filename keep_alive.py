@@ -1,9 +1,10 @@
-from flask import Flask
+from flask import Flask, request
 from threading import Thread
-from Stocks.File_stock.Recup_fichiers import recup_fichier
+from Stocks.File_stock.Recup_fichiers import recup_fichier, recup_sqlite
 from requests import head
 from logging import info
 from time import sleep
+from sqlite3 import connect
 
 app = Flask("")
 
@@ -67,9 +68,32 @@ def dds():
 def fdfdf():
     return recup_fichier('Kenji_Battle/V0.5/V0.5.exe')
 
-@app.route('/Cafet/données.txt')
+@app.route('/Cafet/données', methods = ['POST', 'GET'])
 def créer():
-    return "Ce texte va être remplacé."
+    conn = connect(recup_sqlite("données.sq3"))
+    cur = conn.cursor()
+    rep = ""
+    if request.method == 'POST':
+        try:
+            data: dict[str, int | str] = request.json
+            noms: list[str] = []
+            donnees: list[str] = []
+
+            for nom, donnee in data.items():
+                noms.append(nom)
+                donnees.append(str(donnee))
+
+            cur.execute(f"insert into achats({", ".join(noms)}) values({", ".join(donnees)})")
+            conn.commit()
+            rep = "Il n'y a eu aucun problème."
+        except Exception as e:
+            rep = f"Il y a eu une erreur:\n{e}"
+    elif request.method == 'GET':
+        rep = cur.execute("select * from achats").fetchall()
+        
+    cur.close()
+    conn.close()
+    return rep
 
 def run():
     app.run(host= "0.0.0.0", port= 8080)
