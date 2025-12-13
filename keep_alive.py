@@ -1,7 +1,7 @@
 from flask import Flask, request
 from threading import Thread
 from Stocks.File_stock.Recup_fichiers import recup_fichier, recup_sqlite
-from requests import head
+from requests import head, get
 from logging import info
 from time import sleep
 from sqlite3 import connect
@@ -99,6 +99,19 @@ def créer():
     conn.close()
     return rep
 
+def recuperation():
+    anciennes_infos: list[list[str | int]] = list(get("https://bot-discord-13wx.onrender.com/Cafet/données").content.decode()) # pyright: ignore[reportAssignmentType]
+    conn = connect(recup_sqlite("données.sq3"))
+    cur = conn.cursor()
+    for donnees in anciennes_infos:
+        for i in range(len(donnees)):
+            element = donnees[i]
+            if type(element) == str:
+                donnees[i] = f"'{element}'"
+            elif type(element) == int:
+                donnees[i] = str(element)
+        cur.execute(f"insert into ventes_journalières(capucino, noisette, caramel, citron, menthe, café, chocolat, nom_jour, date) values({", ".join(donnees)})") # pyright: ignore[reportArgumentType, reportCallIssue]
+
 def run():
     app.run(host= "0.0.0.0", port= 8080)
 
@@ -115,6 +128,7 @@ def ping():
         sleep(120)
 
 def keep_alive():
+    recuperation()
     t = Thread(target= run)
     t.start()
     e = Thread(target= ping)
