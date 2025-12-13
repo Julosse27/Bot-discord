@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from threading import Thread
 from Stocks.File_stock.Recup_fichiers import recup_fichier, recup_sqlite
 from requests import head, get
@@ -93,14 +93,15 @@ def créer():
         except Exception as e:
             rep = f"Il y a eu une erreur:\n{e}"
     elif request.method == 'GET':
-        rep = cur.execute("select * from ventes_journalières").fetchall()
+        rep = jsonify(cur.execute("select * from ventes_journalières").fetchall())
         
     cur.close()
     conn.close()
     return rep
 
 def recuperation():
-    anciennes_infos: list[list[str | int]] = list(get("https://bot-discord-13wx.onrender.com/Cafet/données").content.decode()) # pyright: ignore[reportAssignmentType]
+    response = get("https://bot-discord-13wx.onrender.com/Cafet/données")
+    anciennes_infos = response.json()
     info(anciennes_infos)
     conn = connect(recup_sqlite("données.sq3"))
     cur = conn.cursor()
