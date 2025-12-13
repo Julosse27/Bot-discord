@@ -83,13 +83,13 @@ def créer():
                 noms.append(nom)
                 donnees.append(str(donnee))
 
-            cur.execute(f"insert into achats({", ".join(noms)}) values({", ".join(donnees)})")
+            cur.execute(f"insert into ventes_journalières({", ".join(noms)}) values({", ".join(donnees)})")
             conn.commit()
             rep = "Il n'y a eu aucun problème."
         except Exception as e:
             rep = f"Il y a eu une erreur:\n{e}"
     elif request.method == 'GET':
-        rep = cur.execute("select * from achats").fetchall()
+        rep = cur.execute("select * from ventes_journalières").fetchall()
         
     cur.close()
     conn.close()
