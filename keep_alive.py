@@ -101,6 +101,7 @@ def créer():
 
 def recuperation():
     anciennes_infos: list[list[str | int]] = list(get("https://bot-discord-13wx.onrender.com/Cafet/données").content.decode()) # pyright: ignore[reportAssignmentType]
+    info(anciennes_infos)
     conn = connect(recup_sqlite("données.sq3"))
     cur = conn.cursor()
     for donnees in anciennes_infos:
