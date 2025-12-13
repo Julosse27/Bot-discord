@@ -75,6 +75,10 @@ def créer():
     rep = ""
     if request.method == 'POST':
         try:
+            test_supp = request.get_data(as_text= True)
+            if test_supp == "réinitialisation":
+                cur.execute("delete from ventes_journalières")
+                conn.commit()
             data: dict[str, int | str] = request.json
             noms: list[str] = []
             donnees: list[str] = []
