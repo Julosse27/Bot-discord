@@ -80,8 +80,12 @@ def créer():
             donnees: list[str] = []
 
             for nom, donnee in data.items():
+                if type(donnee) == int:
+                    donnee = str(donnee)
+                elif type(donnee) == str:
+                    donnee = f"{donnee}"
                 noms.append(nom)
-                donnees.append(str(donnee))
+                donnees.append(donnee)  # pyright: ignore[reportArgumentType]
 
             cur.execute(f"insert into ventes_journalières({", ".join(noms)}) values({", ".join(donnees)})")
             conn.commit()
