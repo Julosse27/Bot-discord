@@ -10,7 +10,7 @@ app = Flask("")
 
 @app.route('/')
 def home():
-    return "Le Bot est en ligne !"
+    return recup_fichier("template.html", "r").read()
 
 @app.route("/Test.txt")
 def render():

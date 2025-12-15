@@ -5,26 +5,31 @@ dirname = os.path.realpath(os.path.dirname(__file__))
 
 file_not_exist = f"{dirname}/file_not_exist.txt"
 
-def recup_fichier(fichier: str):
+def recup_fichier(fichier: str, mode: Literal["rb", "r"] = "rb"):
     r"""
     Cette fonction va permettre de rechercher un fichier 
     dans les dossiers du bot.
-    Elle le renverra sous la forme de bits (mode `rb`) pour convenir à
+    Elle le renverra sous la forme de bits (mode `rb` ou `r`) pour convenir à
     tout les formats de fichiers.
     
     :param fichier: Le chemin jusqu'au fichier du bot.
     :type fichier: str
+    :param mode: Par default `rb` celui change le mode de lecture.
+    :type mode: Literal["rb", "r"]
 
-    :return file: Le fichier qui est trouvé à l'enplacement
+    :return file: Le fichier qui est trouvé à l'emplacement.
     /!\ si il n'est pas trouvé cette fonction renverra un fichier type.
     """
 
     if not os.path.exists(f"{dirname}/{fichier}"):
-        return open(file_not_exist, "rb")
+        with open(file_not_exist, mode) as file:
+            return_file = file
+        return return_file
     
-    file = open(f"{dirname}/{fichier}", "rb")
+    with open(f"{dirname}/{fichier}", mode) as file:
+        return_file = file
     
-    return file
+    return return_file
 
 def recup_sqlite(nom_fichier: str):
     """
