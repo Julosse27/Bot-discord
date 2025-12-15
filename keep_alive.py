@@ -10,7 +10,7 @@ app = Flask("")
 
 @app.route('/')
 def home():
-    return recup_fichier("template.html", "r").read()
+    return recup_fichier("template.html", "r")
 
 @app.route("/Test.txt")
 def render():

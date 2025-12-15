@@ -23,11 +23,11 @@ def recup_fichier(fichier: str, mode: Literal["rb", "r"] = "rb"):
 
     if not os.path.exists(f"{dirname}/{fichier}"):
         with open(file_not_exist, mode) as file:
-            return_file = file
+            return_file = file.read()
         return return_file
     
     with open(f"{dirname}/{fichier}", mode) as file:
-        return_file = file
+        return_file = file.read()
     
     return return_file
 
