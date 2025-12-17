@@ -105,22 +105,24 @@ def créer():
     return rep
 
 def recuperation():
-    response = get("https://bot-discord-13wx.onrender.com/Cafet/données")
-    anciennes_infos = response.json()
-    info(anciennes_infos)
-    conn = connect(recup_sqlite("données.sq3"))
-    cur = conn.cursor()
-    for donnees in anciennes_infos:
-        for i in range(len(donnees)):
-            element = donnees[i]
-            if type(element) == str:
-                donnees[i] = f"'{element}'"
-            elif type(element) == int:
-                donnees[i] = str(element)
-        cur.execute(f"insert into ventes_journalières(capucino, noisette, caramel, citron, menthe, café, chocolat, nom_jour, date) values({", ".join(donnees)})") # pyright: ignore[reportArgumentType, reportCallIssue]
-    conn.commit()
-    cur.close()
-    conn.close()
+    try:
+        response = get("https://bot-discord-13wx.onrender.com/Cafet/données")
+        anciennes_infos = response.json()
+        conn = connect(recup_sqlite("données.sq3"))
+        cur = conn.cursor()
+        for donnees in anciennes_infos:
+            for i in range(len(donnees)):
+                element = donnees[i]
+                if type(element) == str:
+                    donnees[i] = f"'{element}'"
+                elif type(element) == int:
+                    donnees[i] = str(element)
+            cur.execute(f"insert into ventes_journalières(capucino, noisette, caramel, citron, menthe, café, chocolat, nom_jour, date) values({", ".join(donnees)})") # pyright: ignore[reportArgumentType, reportCallIssue]
+        conn.commit()
+        cur.close()
+        conn.close()
+    except:
+        info("L'ancienne version de la base de donnée n'est pas disponible.")
 
 def run():
     app.run(host= "0.0.0.0", port= 8080)
