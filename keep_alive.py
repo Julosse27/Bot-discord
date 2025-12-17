@@ -140,7 +140,9 @@ def ping():
         sleep(120)
 
 def keep_alive():
-    recuperation()
+    a = Thread(target= recuperation)
+    a.start()
+    a.join(10.0)
     t = Thread(target= run)
     t.start()
     e = Thread(target= ping)
