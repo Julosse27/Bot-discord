@@ -8,9 +8,40 @@ from sqlite3 import connect
 
 app = Flask("")
 
-@app.route('/')
+@app.route('/', methods = ['POST', 'GET', 'HEAD'])
 def home():
-    return recup_fichier("template.html", "r")
+    conn = connect(recup_sqlite("données.sq3"))
+    cur = conn.cursor()
+    rep = ""
+    if request.method == 'POST':
+        try:
+            test_supp = request.get_data(as_text= True)
+            if test_supp == "réinitialisation":
+                cur.execute("delete from ventes_journalières")
+                conn.commit()
+            data: dict[str, int | str] = request.get_json()
+            if data != None:
+                noms: list[str] = []
+                donnees: list[str] = []
+
+                for nom, donnee in data.items():
+                    if type(donnee) == int:
+                        donnee = str(donnee)
+                    elif type(donnee) == str:
+                        donnee = f"'{donnee}'"
+                    noms.append(nom)
+                    donnees.append(donnee)  # pyright: ignore[reportArgumentType]
+
+                cur.execute(f'''insert into ventes_journalières({", ".join(noms)}) values({", ".join(donnees)})''')
+                conn.commit()
+            rep = "Il n'y a eu aucun problème."
+        except Exception as e:
+            rep = f"Il y a eu une erreur:\n{e}"
+    elif request.method == 'GET':
+        rep = recup_fichier("template.html", "r")
+    elif request.method == 'HEAD':
+        rep = "Le site est encore en ligne."
+    return rep
 
 @app.route("/Test.txt")
 def render():
