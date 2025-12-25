@@ -148,7 +148,7 @@ def recuperation():
                     donnees[i] = f"'{element}'"
                 elif type(element) == int:
                     donnees[i] = str(element)
-            cur.execute(f"insert into ventes_journalières(capucino, noisette, caramel, citron, menthe, café, chocolat, nom_jour, date) values({", ".join(donnees)})") # pyright: ignore[reportArgumentType, reportCallIssue]
+            cur.execute(f"insert into ventes_journalières(capucino, noisette, caramel, citron, menthe, café, chocolat, date) values({", ".join(donnees)})") # pyright: ignore[reportArgumentType, reportCallIssue]
         conn.commit()
         cur.close()
         conn.close()

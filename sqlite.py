@@ -12,7 +12,6 @@ cur.execute("""create table ventes_journalières(
             menthe integer default 0,
             café integer default 0,
             chocolat integer default 0,
-            nom_jour text,
             date text)""")
 
 cur.close()
