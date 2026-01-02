@@ -36,26 +36,33 @@
         border-radius: 10% / 45%;
         text-align: center;
       }
+      .titre {
+        text-align: center;
+      }
+      .logo {
+        align-self: center;
+      }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>Un bot, un site.</h1>
-      <p>Ce site sers de stockage pour le bot mais pas que 😜.</p>
-      <div class="info">
-        <p>
-          Par exemple sur
-          <strong>
-            <a
-              href="https://bot-discord-13wx.onrender.com/Cafet/donnees"
-              target="_blank"
-              >cette page</a
-            >
-          </strong>
-          vous retrouverez tout les moments où j'ai mit à jour le serveur et à
-          quelle heure.
-        </p>
-      </div>
-    </div>
+    <img type="image/svg+xml" src="data:image/svg+xml,{{ icone }}" class="logo">
+    <h1 class="titre">Un bot, un site.</h1>
   </body>
+  <div class="container">
+    <p>Ce site sers de stockage pour le bot mais pas que 😜.</p>
+    <div class="info">
+      <p>
+        Par exemple sur
+        <strong>
+          <a
+            href="https://bot-discord-13wx.onrender.com/Cafet/donnees"
+            target="_blank"
+            >cette page</a
+          >
+        </strong>
+        vous retrouverez tout les moments où j'ai mit à jour le serveur et à
+        quelle heure.
+      </p>
+    </div>
+  </div>
 </html>
