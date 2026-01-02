@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    <defs>
+        <linearGradient id="grad" x1="0%" y1="0%" x2="70%" y2="100%">
+            <stop offset="0%" style="stop-color:#5865F2" />
+            <stop offset="40%" style="stop-color:#5865F2"/>
+            <stop offset="100%" style="stop-color:#DFDFFF"/>
+        </linearGradient>
+    </defs>
+    
+    <circle cx="256" cy="256" r="240" fill="url(#grad)"/>
+    
+    <path d="M 206 240 
+             l -75 30 75 30" 
+             fill="None" 
+             stroke="black" 
+             stroke-width="20" 
+             stroke-linecap="round" 
+             stroke-linejoin="round"/>
+
+    <path d="M 306 240
+             l 75 30 -75 30"
+             fill="None"
+             stroke="black"
+             stroke-width="22"
+             stroke-linecap="round"
+             stroke-linejoin="round" />
+
+    <path d="M 271 205
+             l -30 130"
+             
+             fill="None"
+             stroke="black"
+             stroke-width="23"
+             stroke-linecap="round"
+             stroke-linejoin="round" />
+    
+    <rect x="106" y="165" width="300" height="250" 
+          fill="None" stroke="black"
+          stroke-width="10" rx="40"/>
+    <path d="M 106 360
+             h 300
+             v 15
+             q 0 40 -40 40
+             h -220
+             q -40 0 -40 -40
+             z"
+             stroke="None"
+             fill="black"
+             />
+    
+    <path d="M 196 420
+             h 120
+             v 40
+             h 20
+             q 10 5 0 10
+             h -160
+             q -10 -5 0 -10
+             h 20
+             z"
+             fill="black"
+             stroke="None" />
+    <circle cx="256" cy="395" r="17" fill="#57F287">
+        <animate
+        attributeName="fill"
+        values="#57F287;#FEE75C;#57F287"
+        keyTimes="0;0.7;1"
+        dur="3s"
+        repeatCount="indefinite"/>
+    </circle>
+    <path d="M 285 160 
+             q 70 40 120 20
+             l 7 -30 -60 7 -60 -30 z"
+             stroke="None"
+             fill="black" />
+    <polygon points="256,110 355,160 455,145 365,90" 
+             stroke="black"
+             fill="None"
+             stroke-width="10"
+             stroke-linejoin="round"/>
+    <ellipse cx="360" cy="125" rx="20" ry="10" transform="rotate(10 360 125)"/>
+    <path d="M 360 125 l 95 20 v 50" 
+             stroke="black"
+             stroke-width="10"
+             stroke-linejoin="round"
+             fill="None"/>
+    <circle cx="455" cy="195" r="13"/>
+</svg>
