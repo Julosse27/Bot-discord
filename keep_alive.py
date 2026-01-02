@@ -135,9 +135,13 @@ def créer():
     conn.close()
     return rep
 
+app.route("/icon.svg")
+def paddzafz():
+    return recup_fichier("icon.svg", "r")
+
 def recuperation():
     try:
-        response = get("https://bot-discord-13wx.onrender.com/Cafet/données")
+        response = get("https://bot-discord-13wx.onrender.com/Cafet/donnees")
         anciennes_infos = response.json()
         conn = connect(recup_sqlite("données.sq3"))
         cur = conn.cursor()
