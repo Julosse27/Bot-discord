@@ -5,6 +5,7 @@ from requests import head, get
 from logging import info
 from time import sleep
 from sqlite3 import connect
+from urllib.parse import quote
 
 app = Flask("")
 
@@ -38,7 +39,7 @@ def home():
         except Exception as e:
             rep = f"Il y a eu une erreur:\n{e}"
     elif request.method == 'GET':
-        rep = render_template_string(recup_fichier("template.html", "r"), icone = recup_fichier("icon.svg", "r"))
+        rep = render_template_string(recup_fichier("template.html", "r"), icone = quote(recup_fichier("icon.svg", "r")))
     elif request.method == 'HEAD':
         rep = "Le site est encore en ligne."
     return rep
@@ -134,10 +135,6 @@ def créer():
     cur.close()
     conn.close()
     return rep
-
-app.route("/icon.svg")
-def paddzafz():
-    return recup_fichier("icon.svg", "r")
 
 def recuperation():
     try:
