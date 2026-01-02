@@ -10,10 +10,10 @@ app = Flask("")
 
 @app.route('/', methods = ['POST', 'GET', 'HEAD'])
 def home():
-    conn = connect(recup_sqlite("données.sq3"))
-    cur = conn.cursor()
     rep = ""
     if request.method == 'POST':
+        conn = connect(recup_sqlite("données.sq3"))
+        cur = conn.cursor()
         try:
             test_supp = request.get_data(as_text= True)
             if test_supp == "réinitialisation":
@@ -99,7 +99,7 @@ def dds():
 def fdfdf():
     return recup_fichier('Kenji_Battle/V0.5/V0.5.exe')
 
-@app.route('/Cafet/données', methods = ['POST', 'GET'])
+@app.route('/Cafet/donnees', methods = ['POST', 'GET'])
 def créer():
     conn = connect(recup_sqlite("données.sq3"))
     cur = conn.cursor()
