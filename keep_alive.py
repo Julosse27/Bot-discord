@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template_string
 from threading import Thread
 from Stocks.File_stock.Recup_fichiers import recup_fichier, recup_sqlite
 from requests import head, get
@@ -38,7 +38,7 @@ def home():
         except Exception as e:
             rep = f"Il y a eu une erreur:\n{e}"
     elif request.method == 'GET':
-        rep = recup_fichier("template.html", "r")
+        rep = render_template_string(recup_fichier("template.html", "r"), icone = recup_fichier("icon.svg", "r"))
     elif request.method == 'HEAD':
         rep = "Le site est encore en ligne."
     return rep
