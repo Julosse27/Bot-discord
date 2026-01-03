@@ -19,6 +19,10 @@ class Global(commands.Cog):
     async def tel(self, interaction: discord.Interaction):
         await interaction.response.send_message("Voila le fichier: https://drive.google.com/file/d/1eWzIWn5MFPnkG94zndSagtarWPTPpr97/view?usp=drive_link")
 
+    @app_commands.command(name= "site", description= "Vous donne le lien jusqu'au site du bot qui sers à beaucoup de choses.")
+    async def site(self, interaction: discord.Interaction):
+        await interaction.response.send_message("Voila où vous pouvez me trouver sur internet:\nhttps://bot-discord-13wx.onrender.com")
+
     @commands.command(name= "help", brief= "Un peu d'aide.", description= "Donne de l'aide sur une commande ou un groupe commandes.")
     async def help(self, ctx: commands.Context, command = None):
 
