@@ -41,12 +41,26 @@
       }
       .logo {
         align-self: center;
+        width: 75px;
+      }
+      .titre_div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 30px;
+        height: 100px;
+      }
+      .div_logo {
+        width: 75px;
       }
     </style>
   </head>
   <body>
-    <img type="image/svg+xml" src="data:image/svg+xml,{{ icone }}" class="logo">
-    <h1 class="titre">Un bot, un site.</h1>
+    <div class="titre_div">
+      <img type="image/svg+xml" src="data:image/svg+xml,{{ icone }}" class="logo">
+      <h1 class="titre">Un bot, un site</h1>
+      <div class="div_logo"></div>
+    </div>
   </body>
   <div class="container">
     <p>Ce site sers de stockage pour le bot mais pas que 😜.</p>

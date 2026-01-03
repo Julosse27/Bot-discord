@@ -179,3 +179,5 @@ def keep_alive():
     t.start()
     e = Thread(target= ping)
     e.start()
+
+run()

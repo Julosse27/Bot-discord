@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
     <defs>
-        <linearGradient id="grad" x1="0%" y1="0%" x2="70%" y2="100%">
+        <linearGradient id="grad" x1="70%" y1="100%" x2="0%" y2="0%">
             <stop offset="0%" style="stop-color:#5865F2" />
-            <stop offset="40%" style="stop-color:#5865F2"/>
+            <stop offset="30%" style="stop-color:#5865F2"/>
             <stop offset="100%" style="stop-color:#DFDFFF"/>
         </linearGradient>
     </defs>
@@ -12,7 +12,7 @@
     <path d="M 206 240 
              l -75 30 75 30" 
              fill="None" 
-             stroke="black" 
+             stroke="red" 
              stroke-width="20" 
              stroke-linecap="round" 
              stroke-linejoin="round"/>
@@ -20,7 +20,7 @@
     <path d="M 306 240
              l 75 30 -75 30"
              fill="None"
-             stroke="black"
+             stroke="red"
              stroke-width="22"
              stroke-linecap="round"
              stroke-linejoin="round" />
@@ -29,13 +29,13 @@
              l -30 130"
              
              fill="None"
-             stroke="black"
+             stroke="blue"
              stroke-width="23"
              stroke-linecap="round"
              stroke-linejoin="round" />
     
     <rect x="106" y="165" width="300" height="250" 
-          fill="None" stroke="black"
+          fill="None" stroke="gray"
           stroke-width="10" rx="40"/>
     <path d="M 106 360
              h 300
@@ -45,10 +45,10 @@
              q -40 0 -40 -40
              z"
              stroke="None"
-             fill="black"
+             fill="gray"
              />
     
-    <path d="M 196 420
+    <path d="M 196 419
              h 120
              v 40
              h 20
@@ -57,7 +57,7 @@
              q -10 -5 0 -10
              h 20
              z"
-             fill="black"
+             fill="gray"
              stroke="None" />
     <circle cx="256" cy="395" r="17" fill="#57F287">
         <animate
@@ -84,4 +84,35 @@
              stroke-linejoin="round"
              fill="None"/>
     <circle cx="455" cy="195" r="13"/>
+    <g transform="rotate(-15 165 140)">
+        <path d="M 65 100
+             q -20 50 -20 100
+               20 15 50 30
+               10 -10 15 -20
+             l -20 -10
+               4 -2.5
+             q 50 15 100 0
+             l 4 2.5
+               -20 10
+             q 5 10 15 20
+               30 -15 50 -30
+               10 -40 -20 -100
+               -35 -10 -50 -10
+             l -5 15
+             q -25 -5 -50 0
+             l -5 -15
+             q -25 0 -50 10
+             "
+             fill="#5865F2"
+             stroke="None"
+              />
+        <ellipse rx="19" ry="22" 
+                 cx="114" cy="160"
+                 fill="white"
+                 stroke="None" />
+        <ellipse rx="19" ry="22"
+                 cx="174" cy="160"
+                 fill="white"
+                 stroke="None" />
+    </g>
 </svg>
