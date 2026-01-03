@@ -33,9 +33,9 @@
              stroke-width="23"
              stroke-linecap="round"
              stroke-linejoin="round" />
-    
-    <rect x="106" y="165" width="300" height="250" 
-          fill="None" stroke="gray"
+    <g stroke="#292929" fill="#292929">
+        <rect x="106" y="165" width="300" height="250" 
+          fill="None"
           stroke-width="10" rx="40"/>
     <path d="M 106 360
              h 300
@@ -45,9 +45,7 @@
              q -40 0 -40 -40
              z"
              stroke="None"
-             fill="gray"
              />
-    
     <path d="M 196 419
              h 120
              v 40
@@ -57,8 +55,9 @@
              q -10 -5 0 -10
              h 20
              z"
-             fill="gray"
              stroke="None" />
+    </g>
+
     <circle cx="256" cy="395" r="17" fill="#57F287">
         <animate
         attributeName="fill"
