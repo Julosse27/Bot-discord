@@ -39,7 +39,6 @@ def home():
         except Exception as e:
             rep = f"Il y a eu une erreur:\n{e}"
     elif request.method == 'GET':
-        info(recup_fichier("icon.svg", "r"))
         rep = render_template_string(recup_fichier("template.html", "r"), icone = quote(recup_fichier("icon.svg", "r")))
     elif request.method == 'HEAD':
         rep = "Le site est encore en ligne."
