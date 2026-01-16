@@ -102,7 +102,7 @@ def fdfdf():
 
 @app.route('/Cafet/donnees', methods = ['POST', 'GET'])
 def créer():
-    conn = connect(recup_sqlite("données.sq3"))
+    conn = connect(recup_sqlite("données_cafet.sq3"))
     cur = conn.cursor()
     rep = ""
     if request.method == 'POST':
@@ -130,7 +130,11 @@ def créer():
         except Exception as e:
             rep = f"Il y a eu une erreur:\n{e}"
     elif request.method == 'GET':
-        rep = jsonify(cur.execute("select * from ventes_journalières").fetchall())
+        annee_scolaire = request.args.get('annee_scolaire', default = None, type = str)
+        if annee_scolaire:
+            rep = jsonify(cur.execute(f"select * from ventes_journalières where annee_scolaire = '{annee_scolaire}'").fetchall())
+        else:
+            rep = jsonify(cur.execute("select * from ventes_journalières").fetchall())
         
     cur.close()
     conn.close()
