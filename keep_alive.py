@@ -6,7 +6,7 @@ from logging import info
 from time import sleep
 from sqlite3 import connect
 from urllib.parse import quote
-from json import load
+from json import loads, load
 
 app = Flask("")
 
@@ -178,7 +178,7 @@ def créer():
 def recuperation():
     try:
         response: Response = get("https://bot-discord-13wx.onrender.com/Cafet/donnees?recup=True")
-        anciennes_infos: dict[str, list] = load(response.content)  #type:ignore
+        anciennes_infos: dict[str, list] = loads(response)  #type:ignore
         conn = connect(recup_sqlite("donnees_stocks_cafet"))
         cur = conn.cursor()
         cur.execute("disable trigger verif_stocks, enregistrement_vente, maj_stocks")
