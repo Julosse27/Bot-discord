@@ -181,7 +181,7 @@ def recuperation():
         anciennes_infos: dict[str, list] = loads(response.content)  #type:ignore
         conn = connect(recup_sqlite("donnees_stocks_cafet"))
         cur = conn.cursor()
-        cur.execute("disable trigger verif_stocks, enregistrement_vente, maj_stocks")
+        cur.execute("update chek_trigger set etat = 0")
         for nom_table, elements in anciennes_infos.items():
             if nom_table != "stocks":
                 elements = list(map(str, elements))
@@ -191,7 +191,7 @@ def recuperation():
                 donnees = list(map(str, elements[1:]))
                 cur.execute(f"update stocks set stock = {donnees[0]}, etat_stock = {donnees[1]} where nom = {nom_type}")
                 
-        cur.execute("enable trigger verif_stocks, enregistrement_vente, maj_stocks")
+        cur.execute("update chek_trigger set etat = 0")
         conn.commit()
         cur.close()
         conn.close()
