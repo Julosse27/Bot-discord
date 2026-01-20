@@ -58,7 +58,7 @@
              stroke="None" />
     </g>
 
-    <circle cx="256" cy="395" r="17" fill="#57F287">
+    <circle cx="256" cy="385" r="17" fill="#57F287">
         <animate
         attributeName="fill"
         values="#57F287;#FEE75C;#57F287"

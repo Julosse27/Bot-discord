@@ -1,3 +1,3 @@
 import requests
 
-print(requests.post("https://bot-discord-13wx.onrender.com/Cafet/donnees", data= "réinitialisation").content.decode())
+print(requests.get("https://bot-discord-13wx.onrender.com/Cafet/donnees?reinit=True").content.decode())

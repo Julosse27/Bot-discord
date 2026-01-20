@@ -1,11 +1,12 @@
 from flask import Flask, request, jsonify, render_template_string
 from threading import Thread
-from Stocks.File_stock.Recup_fichiers import recup_fichier, recup_sqlite
+from Stocks.File_stock.Recup_fichiers import recup_fichier, recup_sqlite, recup_script_sql
 from requests import head, get
 from logging import info
 from time import sleep
 from sqlite3 import connect
 from urllib.parse import quote
+from json import load
 
 app = Flask("")
 
@@ -13,29 +14,18 @@ app = Flask("")
 def home():
     rep = ""
     if request.method == 'POST':
-        conn = connect(recup_sqlite("données.sq3"))
+        conn = connect(recup_sqlite(f"donnees_stock_cafet"))
         cur = conn.cursor()
         try:
-            test_supp = request.get_data(as_text= True)
-            if test_supp == "réinitialisation":
-                cur.execute("delete from ventes_journalières")
-                conn.commit()
-            data: dict[str, int | str] = request.get_json()
+            data: list = request.get_json()
             if data != None:
-                noms: list[str] = []
-                donnees: list[str] = []
+                donnees = list(map(str, data))
 
-                for nom, donnee in data.items():
-                    if type(donnee) == int:
-                        donnee = str(donnee)
-                    elif type(donnee) == str:
-                        donnee = f"'{donnee}'"
-                    noms.append(nom)
-                    donnees.append(donnee)  # pyright: ignore[reportArgumentType]
-
-                cur.execute(f'''insert into ventes_journalières({", ".join(noms)}) values({", ".join(donnees)})''')
+                cur.execute(f'''insert into ventes_journalières(stocks_achete, annee_scolaire) values({", ".join(donnees)})''')
                 conn.commit()
-            rep = "Il n'y a eu aucun problème."
+                rep = "Il n'y a eu aucun problème."
+            else:
+                rep = "Les données n'ont pas été bien chargées"
         except Exception as e:
             rep = f"Il y a eu une erreur:\n{e}"
     elif request.method == 'GET':
@@ -102,39 +92,84 @@ def fdfdf():
 
 @app.route('/Cafet/donnees', methods = ['POST', 'GET'])
 def créer():
-    conn = connect(recup_sqlite("données_cafet.sq3"))
+    conn = connect(recup_sqlite(f"donnees_stock_cafet"))
     cur = conn.cursor()
     rep = ""
     if request.method == 'POST':
         try:
             test_supp = request.get_data(as_text= True)
             if test_supp == "réinitialisation":
-                cur.execute("delete from ventes_journalières")
+                cur.executescript(recup_script_sql("script_réinitialisation"))
                 conn.commit()
-            data: dict[str, int | str] = request.get_json()
-            if data != None:
-                noms: list[str] = []
-                donnees: list[str] = []
-
-                for nom, donnee in data.items():
-                    if type(donnee) == int:
-                        donnee = str(donnee)
-                    elif type(donnee) == str:
-                        donnee = f"'{donnee}'"
-                    noms.append(nom)
-                    donnees.append(donnee)  # pyright: ignore[reportArgumentType]
-
-                cur.execute(f'''insert into ventes_journalières({", ".join(noms)}) values({", ".join(donnees)})''')
-                conn.commit()
-            rep = "Il n'y a eu aucun problème."
+                rep = f"La base de donnée a bien été réinitialisé."
+            else:
+                json_data = ", ".join(request.get_json())
+                cur.execute(f"insert into ventes_journalières values ({json_data})")
         except Exception as e:
             rep = f"Il y a eu une erreur:\n{e}"
     elif request.method == 'GET':
-        annee_scolaire = request.args.get('annee_scolaire', default = None, type = str)
-        if annee_scolaire:
-            rep = jsonify(cur.execute(f"select * from ventes_journalières where annee_scolaire = '{annee_scolaire}'").fetchall())
+        recuperation_donnees = request.args.get('recup', default= False, type= bool)
+        if recuperation_donnees:
+            rep = {}
+            for nom_table in cur.execute("""select name from sqlite_master where type='table' and name not like 'sqlite_%'""").fetchall():
+                rep[nom_table] = cur.execute(f"select * from {nom_table}").fetchall()
+
+            rep = jsonify(rep)
         else:
-            rep = jsonify(cur.execute("select * from ventes_journalières").fetchall())
+            reinitialisation = request.args.get('reinit', False, bool)
+            if reinitialisation:
+                cur.executescript(recup_script_sql('script_réinitialisation_cafet'))
+            else:
+                table = request.args.get('table', default= "ventes")
+                if table in ("suivi", "stock", "ventes"):
+                    if table == "ventes":
+                        annee_scolaire = request.args.get('annee_scolaire', default = '2025-2026')
+
+                        contenu_base = cur.execute(f"select * from ventes_journalières where annee_scolaire = '{annee_scolaire}'").fetchall()
+
+                        rep = list[dict]()
+
+                        for element in contenu_base:
+                            i = {}
+                            i["stocks_achetee"] = load(element[0])
+                            i["date"] = element[1]
+                            i["annee_scolaire"] = element[2]
+
+                            rep.append(i)
+
+                        rep = jsonify(rep)
+                    elif table == "stock":
+                        contenu_base = cur.execute(f"select * from stocks").fetchall()
+
+                        rep = list[dict]()
+
+                        for element in contenu_base:
+                            i = {}
+                            i["nom"] = element[0]
+                            i["stock"] = element[1]
+                            i["etat_stock"] = element[2]
+
+                            rep.append(i)
+
+                        rep = jsonify(rep)
+                    else:
+                        annee_scolaire = request.args.get('annee_scolaire', default = '2025-2026')
+
+                        contenu_base = cur.execute(f"select * from suivi_stocks where annee_scolaire='{annee_scolaire}'").fetchall()
+
+                        rep = list[dict]()
+
+                        for element in contenu_base:
+                            i = {}
+                            i["id"] = element[0]
+                            i["nom_consommation"] = element[1]
+                            i["quantite"] = element[2]
+                            i["date"] = element[3]
+                            i["annee_scolaire"] = element[4]
+
+                            rep.append(i)
+
+                        rep = jsonify(rep)
         
     cur.close()
     conn.close()
@@ -142,18 +177,21 @@ def créer():
 
 def recuperation():
     try:
-        response = get("https://bot-discord-13wx.onrender.com/Cafet/donnees")
-        anciennes_infos = response.json()
-        conn = connect(recup_sqlite("données.sq3"))
+        response = get("https://bot-discord-13wx.onrender.com/Cafet/donnees?recup=True")
+        anciennes_infos: dict[str, list] = load(response.content.decode())  #type:ignore
+        conn = connect(recup_sqlite("donnees_stocks_cafet"))
         cur = conn.cursor()
-        for donnees in anciennes_infos:
-            for i in range(len(donnees)):
-                element = donnees[i]
-                if type(element) == str:
-                    donnees[i] = f"'{element}'"
-                elif type(element) == int:
-                    donnees[i] = str(element)
-            cur.execute(f"insert into ventes_journalières(capucino, noisette, caramel, citron, menthe, café, chocolat, date) values({", ".join(donnees)})") # pyright: ignore[reportArgumentType, reportCallIssue]
+        cur.execute("disable trigger verif_stocks, enregistrement_vente, maj_stocks")
+        for nom_table, elements in anciennes_infos.items():
+            if nom_table != "stocks":
+                elements = list(map(str, elements))
+                cur.execute(f"insert into {nom_table} values{", ".join(elements)}")
+            else:
+                nom_type = elements[0]
+                donnees = list(map(str, elements[1:]))
+                cur.execute(f"update stocks set stock = {donnees[0]}, etat_stock = {donnees[1]} where nom = {nom_type}")
+                
+        cur.execute("enable trigger verif_stocks, enregistrement_vente, maj_stocks")
         conn.commit()
         cur.close()
         conn.close()

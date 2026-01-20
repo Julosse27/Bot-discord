@@ -40,7 +40,7 @@ def recup_sqlite(nom_fichier: str):
 
     :return path: Le chemin complet jusqu'a ce fichier.
     """
-    path = f"{dirname}/sqlite/{nom_fichier}"
+    path = f"{dirname}/sqlite/{nom_fichier}.sq3"
     
     return path
 
@@ -62,3 +62,25 @@ def recup_path(fichier: str):
         return file_not_exist
     
     return path
+
+def recup_script_sql(nom_fichier:str):
+    r"""
+    Cette fonction va permettre de rechercher le script sql avec le nom donné.
+
+    :param nom_fichier: Le nom du fichier dans la mémoire du bot.
+    :type nom_fichier: str
+
+    :return file: Le contenu du fichier en str.
+    /!\ si il n'est pas trouvé cette fonction renverra le chemin d'un fichier type.
+    """
+
+    path = f"{dirname}/sqlite/scripts/{nom_fichier}.sql"
+
+    if not os.path.exists(path):
+        with open(file_not_exist) as file:
+            rep = file.read()
+    else:
+        with open(path) as file:
+            rep = file.read()
+    
+    return rep
