@@ -19,8 +19,15 @@ create table ventes_journalieres(
     date datetime DEFAULT CURRENT_TIMESTAMP,
     annee_scolaire text not NULL
 );
+CREATE TABLE chek_trigger(
+    id INT CHECK(id = 1),
+    etat INT DEFAULT 1 CHECK(etat in (0, 1))
+);
+INSERT INTO chek_trigger(id)
+values(1);
 CREATE TRIGGER verif_stocks BEFORE
-INSERT ON ventes_journalieres BEGIN
+INSERT ON ventes_journalieres
+    WHEN chek_trigger.etat = 1 BEGIN
 SELECT CASE
         WHEN not json_valid(NEW.stocks_achete) = 1 THEN RAISE(
             ABORT,
@@ -48,7 +55,8 @@ SELECT CASE
 END;
 CREATE TRIGGER enregistrement_vente
 AFTER
-INSERT ON ventes_journalieres BEGIN
+INSERT ON ventes_journalieres
+    WHEN chek_trigger.etat = 1 BEGIN
 INSERT INTO suivi_stocks(nom_consommation, quantite, annee_scolaire)
 SELECT js.value->>'nom',
     CAST(js.value->>'qte' AS integer),
@@ -57,7 +65,8 @@ from json_each(NEW.stocks_achete) as js;
 END;
 CREATE TRIGGER maj_stocks
 AFTER
-INSERT ON suivi_stocks BEGIN
+INSERT ON suivi_stocks
+    WHEN chek_trigger.etat = 1 BEGIN
 UPDATE stocks
 SET stock = stock + NEW.quantite,
     etat_stock = CASE
