@@ -195,8 +195,8 @@ def recuperation():
         conn.commit()
         cur.close()
         conn.close()
-    except:
-        info("L'ancienne version de la base de donnée n'est pas disponible.")
+    except Exception as e:
+        info(f"L'ancienne version de la base de donnée n'est pas disponible.\nMessage d'erreur: {e}")
 
 def run():
     app.run(host= "0.0.0.0", port= 8080)
