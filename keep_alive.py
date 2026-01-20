@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template_string
+from flask import Flask, request, jsonify, render_template_string, Response
 from threading import Thread
 from Stocks.File_stock.Recup_fichiers import recup_fichier, recup_sqlite, recup_script_sql
 from requests import head, get
@@ -177,8 +177,8 @@ def créer():
 
 def recuperation():
     try:
-        response = get("https://bot-discord-13wx.onrender.com/Cafet/donnees?recup=True")
-        anciennes_infos: dict[str, list] = load(response.content.decode())  #type:ignore
+        response: Response = get("https://bot-discord-13wx.onrender.com/Cafet/donnees?recup=True")
+        anciennes_infos: dict[str, list] = load(response.content)  #type:ignore
         conn = connect(recup_sqlite("donnees_stocks_cafet"))
         cur = conn.cursor()
         cur.execute("disable trigger verif_stocks, enregistrement_vente, maj_stocks")
