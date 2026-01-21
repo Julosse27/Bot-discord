@@ -7,6 +7,7 @@ from time import sleep
 from sqlite3 import connect
 from urllib.parse import quote
 from json import loads, load
+from os import getenv
 
 app = Flask("")
 
@@ -14,20 +15,23 @@ app = Flask("")
 def home():
     rep = ""
     if request.method == 'POST':
-        conn = connect(recup_sqlite(f"donnees_stock_cafet"))
-        cur = conn.cursor()
-        try:
-            data: list = request.get_json()
-            if data != None:
-                donnees = list(map(str, data))
+        if request.args.get('module', default='') == getenv("MODULE_TOKEN"):
+            conn = connect(recup_sqlite(f"donnees_stock_cafet"))
+            cur = conn.cursor()
+            try:
+                data: list = request.get_json()
+                if data != None:
+                    donnees = list(map(str, data))
 
-                cur.execute(f'''insert into ventes_journalières(stocks_achete, annee_scolaire) values({", ".join(donnees)})''')
-                conn.commit()
-                rep = "Il n'y a eu aucun problème."
-            else:
-                rep = "Les données n'ont pas été bien chargées"
-        except Exception as e:
-            rep = f"Il y a eu une erreur:\n{e}"
+                    cur.execute(f'''insert into ventes_journalières(stocks_achete, annee_scolaire) values({", ".join(donnees)})''')
+                    conn.commit()
+                    rep = "Il n'y a eu aucun problème."
+                else:
+                    rep = "Les données n'ont pas été bien formulées."
+            except Exception as e:
+                rep = f"Il y a eu une erreur:\n{e}"
+        else:
+            rep = "Le module dont vous avez envoyé la requète n'est pas reconnu."
     elif request.method == 'GET':
         rep = render_template_string(recup_fichier("template.html", "r"), icone = quote(recup_fichier("icon.svg", "r")))
     elif request.method == 'HEAD':
@@ -97,14 +101,15 @@ def créer():
     rep = ""
     if request.method == 'POST':
         try:
-            test_supp = request.get_data(as_text= True)
-            if test_supp == "réinitialisation":
-                cur.executescript(recup_script_sql("script_réinitialisation"))
+            data: list = request.get_json()
+            if data != None:
+                donnees = list(map(str, data))
+
+                cur.execute(f'''insert into ventes_journalières(stocks_achete, annee_scolaire) values({", ".join(donnees)})''')
                 conn.commit()
-                rep = f"La base de donnée a bien été réinitialisé."
+                rep = "Il n'y a eu aucun problème."
             else:
-                json_data = ", ".join(request.get_json())
-                cur.execute(f"insert into ventes_journalières values ({json_data})")
+                rep = "Les données n'ont pas été bien formulées."
         except Exception as e:
             rep = f"Il y a eu une erreur:\n{e}"
     elif request.method == 'GET':
@@ -195,6 +200,7 @@ def recuperation():
         conn.commit()
         cur.close()
         conn.close()
+        info(f"L'ancienne version de la base de données à été compiée avec succés.")
     except Exception as e:
         info(f"L'ancienne version de la base de donnée n'est pas disponible.\nMessage d'erreur: {e}")
 
