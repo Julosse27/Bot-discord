@@ -116,6 +116,7 @@ def créer():
         recuperation_donnees = request.args.get('recup', default= False, type= bool)
         if recuperation_donnees:
             rep = {}
+            info(cur.execute("""select name from sqlite_master where type='table' and name not like 'sqlite_%'""").fetchall())
             for nom_table in cur.execute("""select name from sqlite_master where type='table' and name not like 'sqlite_%'""").fetchall():
                 rep[nom_table] = cur.execute(f"select * from {nom_table}").fetchall()
 
