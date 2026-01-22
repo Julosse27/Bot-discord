@@ -1,2 +1,1 @@
-SELECT *
-FROM stocks
+SELECT * FROM sqlite_sequence

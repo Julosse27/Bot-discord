@@ -23,7 +23,7 @@ def home():
                 if data != None:
                     donnees = list(map(str, data))
 
-                    cur.execute(f'''insert into ventes_journalières(stocks_achete, annee_scolaire) values({", ".join(donnees)})''')
+                    cur.execute(f'''insert into ventes_journalieres(stocks_achete, annee_scolaire) values({", ".join(donnees)})''')
                     conn.commit()
                     rep = "Il n'y a eu aucun problème."
                 else:
@@ -105,7 +105,7 @@ def créer():
             if data != None:
                 donnees = list(map(str, data))
 
-                cur.execute(f'''insert into ventes_journalières(stocks_achete, annee_scolaire) values({", ".join(donnees)})''')
+                cur.execute(f'''insert into ventes_journalieres(stocks_achete, annee_scolaire) values({", ".join(donnees)})''')
                 conn.commit()
                 rep = "Il n'y a eu aucun problème."
             else:
@@ -116,11 +116,11 @@ def créer():
         recuperation_donnees = request.args.get('recup', default= False, type= bool)
         if recuperation_donnees:
             rep = {}
-            rep = cur.execute("""select name from sqlite_master where type='table' and name not like 'sqlite_%'""").fetchall()
-            # for nom_table in cur.execute("""select name from sqlite_master where type='table' and name not like 'sqlite_%'""").fetchall():
-            #     rep[nom_table] = cur.execute(f"select * from {nom_table}").fetchall()
+            for nom_table in cur.execute("""select name from sqlite_master where type='table' and name not like 'sqlite_%' and not name='chek_trigger' """).fetchall():
+                nom_table = nom_table[0]
+                rep[nom_table] = cur.execute(f"select * from {nom_table}").fetchall()
 
-            # rep = jsonify(rep)
+            rep = jsonify(rep)
         else:
             reinitialisation = request.args.get('reinit', False, bool)
             if reinitialisation:
@@ -131,7 +131,7 @@ def créer():
                     if table == "ventes":
                         annee_scolaire = request.args.get('annee_scolaire', default = '2025-2026')
 
-                        contenu_base = cur.execute(f"select * from ventes_journalières where annee_scolaire = '{annee_scolaire}'").fetchall()
+                        contenu_base = cur.execute(f"select * from ventes_journalieres where annee_scolaire = '{annee_scolaire}'").fetchall()
 
                         rep = list[dict]()
 
