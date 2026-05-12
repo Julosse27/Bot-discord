@@ -94,6 +94,10 @@ def dds():
 def fdfdf():
     return recup_fichier('Kenji_Battle/V0.5/V0.5.exe')
 
+@app.route('/overlay/base.svg')
+def dededzda():
+    return recup_fichier('overlay_custom/base.svg')
+
 @app.route('/Cafet/donnees', methods = ['POST', 'GET'])
 def créer():
     conn = connect(recup_sqlite(f"donnees_stock_cafet"))
