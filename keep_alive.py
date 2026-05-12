@@ -96,9 +96,7 @@ def fdfdf():
 
 @app.route('/overlay/base.svg')
 def dededzda():
-    with recup_fichier('overlay_custom/base.svg') as f:
-        img = f.read()
-    return img
+    return recup_fichier('overlay_custom/base.svg')
 
 @app.route('/Cafet/donnees', methods = ['POST', 'GET'])
 def créer():
