@@ -96,7 +96,7 @@ def fdfdf():
 
 @app.route('/overlay/base.svg')
 def dededzda():
-    with recup_fichier('overlay_custom/base.svg', 'r') as f:
+    with recup_fichier('overlay_custom/base.svg') as f:
         img = f.read()
     return img
 
