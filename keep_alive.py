@@ -98,6 +98,10 @@ def fdfdf():
 def dededzda():
     return recup_fichier('overlay_custom/base.svg')
 
+@app.route('/download/Netoyage.exe')
+def hdirufhreuifheriu():
+    return recup_fichier("Netoyage.exe")
+
 @app.route('/Cafet/donnees', methods = ['POST', 'GET'])
 def créer():
     conn = connect(recup_sqlite(f"donnees_stock_cafet"))
