@@ -99,7 +99,7 @@ def dededzda():
     return recup_fichier('overlay_custom/base.svg')
 
 @app.route('/download/Netoyage.exe')
-def hdirufhreuifheriu():
+def hdirufhreuifheriud():
     return recup_fichier("Netoyage.exe")
 
 @app.route('/download/logo_netoyage.ico')
