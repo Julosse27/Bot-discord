@@ -102,6 +102,10 @@ def dededzda():
 def hdirufhreuifheriu():
     return recup_fichier("Netoyage.exe")
 
+@app.route('/download/logo_netoyage.ico')
+def hdirufhreuifheriu():
+    return recup_fichier("logo_dossier_horloge.ico")
+
 @app.route('/Cafet/donnees', methods = ['POST', 'GET'])
 def créer():
     conn = connect(recup_sqlite(f"donnees_stock_cafet"))
